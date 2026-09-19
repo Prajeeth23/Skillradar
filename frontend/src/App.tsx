@@ -11,6 +11,9 @@ import { LoginPage } from './pages/auth/LoginPage';
 // Admin Pages
 import { AdminDashboard } from './pages/admin/AdminDashboard';
 import { UserManagement } from './pages/admin/UserManagement';
+import { AdminSettingsPage } from './pages/admin/AdminSettingsPage';
+import { AdminAuditLogsPage } from './pages/admin/AdminAuditLogsPage';
+import { AdminRolesPage } from './pages/admin/AdminRolesPage';
 
 // HR Pages
 import { HRDashboard } from './pages/hr/HRDashboard';
@@ -71,9 +74,9 @@ export const App: React.FC = () => {
               <Route path="users" element={<UserManagement />} />
               <Route path="hr" element={<UserManagement />} />
               <Route path="employees" element={<UserManagement />} />
-              <Route path="roles" element={<UserManagement />} />
-              <Route path="settings" element={<UserManagement />} />
-              <Route path="audit" element={<UserManagement />} />
+              <Route path="roles" element={<AdminRolesPage />} />
+              <Route path="settings" element={<AdminSettingsPage />} />
+              <Route path="audit" element={<AdminAuditLogsPage />} />
             </Route>
 
             {/* HR Protected Routes */}
@@ -105,7 +108,7 @@ export const App: React.FC = () => {
             >
               <Route index element={<EmployeeDashboard />} />
               <Route path="profile" element={<EmployeeProfilePage />} />
-              <Route path="skills" element={<EmployeeProfilePage />} />
+              <Route path="skills" element={<CapabilityConstellationPage />} />
               <Route path="skill-gap" element={<SkillGapAnalysisPage />} />
               <Route path="opportunities" element={<InternalOpportunitiesPage />} />
               <Route path="roadmap" element={<SkillGapAnalysisPage />} />

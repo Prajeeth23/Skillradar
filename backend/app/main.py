@@ -17,10 +17,13 @@ logger = logging.getLogger("skillradar")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Startup: Ensure database schema exists
-    logger.info("Initializing database tables...")
-    Base.metadata.create_all(bind=engine)
-    logger.info("SkillRadar database initialized.")
+    # Startup: Safely initialize database tables if needed
+    logger.info("Checking database connection...")
+    try:
+        Base.metadata.create_all(bind=engine)
+        logger.info("SkillRadar database schema ready.")
+    except Exception as exc:
+        logger.error(f"Database table initialization warning: {exc}")
     yield
     # Shutdown: Clean up resources if necessary
     logger.info("SkillRadar application shutdown.")
@@ -99,7 +102,7 @@ def root():
         "app": settings.APP_NAME,
         "tagline": "Beyond Titles. Discover Talent.",
         "status": "online",
-        "api_docs": "/docs",
+        "api_docs": "/docs" if settings.show_docs else "Disabled in production",
     }
 
 

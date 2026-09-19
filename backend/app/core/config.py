@@ -14,11 +14,11 @@ class Settings(BaseSettings):
     DATABASE_URL: str = "sqlite:///./skillradar.db"
 
     # Security & Auth
-    # In production, this MUST be set via environment variable.
+    # In production, JWT_SECRET MUST be provided via environment variable.
     # In development/test, if omitted, a cryptographically secure key is generated dynamically.
     JWT_SECRET: str = ""
     JWT_ALGORITHM: str = "HS256"
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 1440
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
 
     # API Documentation flag (disabled in production by default)
     DOCS_ENABLED: Optional[bool] = None
@@ -39,11 +39,18 @@ class Settings(BaseSettings):
 
     @field_validator("JWT_SECRET", mode="before")
     @classmethod
-    def validate_jwt_secret(cls, v: Optional[str]) -> str:
-        if not v or v.strip() == "" or v == "skillradar-super-secret-jwt-key-hackathon-2026-beyond-titles":
-            # Generate a secure 256-bit key for local development
-            return secrets.token_urlsafe(32)
-        return v
+    def validate_jwt_secret(cls, v: Optional[str], info) -> str:
+        # If explicitly passed or loaded from env
+        if v and v.strip() and v != "skillradar-super-secret-jwt-key-hackathon-2026-beyond-titles":
+            return v.strip()
+        # In production, strictly reject missing/default JWT secrets
+        # We check APP_ENV from environment if present
+        import os
+        env = os.getenv("APP_ENV", "development").lower()
+        if env in ("production", "prod"):
+            raise ValueError("CRITICAL SECURITY ERROR: JWT_SECRET must be explicitly provided in production environments.")
+        # Generate a cryptographically secure 256-bit key for local development
+        return secrets.token_urlsafe(32)
 
     @property
     def is_production(self) -> bool:

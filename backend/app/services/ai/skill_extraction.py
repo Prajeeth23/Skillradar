@@ -41,6 +41,9 @@ class SkillExtractionService:
                     extracted.append({
                         "name": skill_name,
                         "category": meta["category"],
+                        "is_verified": False,
+                        "source": "AI_DISCOVERED",
+                        "verification_status": "PENDING_VERIFICATION",
                     })
                     break
 

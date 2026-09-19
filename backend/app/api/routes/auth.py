@@ -1,4 +1,6 @@
-from fastapi import APIRouter, Depends, status
+import time
+from collections import defaultdict
+from fastapi import APIRouter, Depends, HTTPException, Request, status
 from sqlalchemy.orm import Session
 
 from app.db.session import get_db
@@ -9,10 +11,33 @@ from app.core.dependencies import get_current_user
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
+# In-memory sliding window rate limiter for login protection
+_login_attempts = defaultdict(list)
+MAX_LOGIN_ATTEMPTS = 10
+WINDOW_SECONDS = 60
+
+
+def _enforce_login_rate_limit(request: Request, email: str):
+    now = time.time()
+    client_ip = request.client.host if request.client else "127.0.0.1"
+    key = f"{client_ip}:{email.strip().lower()}"
+    
+    # Filter attempts within active time window
+    attempts = [t for t in _login_attempts[key] if now - t < WINDOW_SECONDS]
+    _login_attempts[key] = attempts
+    
+    if len(attempts) >= MAX_LOGIN_ATTEMPTS:
+        raise HTTPException(
+            status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+            detail="Too many authentication attempts. Please wait 60 seconds before trying again.",
+        )
+    _login_attempts[key].append(now)
+
 
 @router.post("/login", response_model=Token, status_code=status.HTTP_200_OK)
-def login(login_data: LoginRequest, db: Session = Depends(get_db)):
-    """Authenticate with email & password, returning a JWT token with user role and metadata."""
+def login(login_data: LoginRequest, request: Request, db: Session = Depends(get_db)):
+    """Authenticate with email & password, returning a JWT token with rate-limiting protection."""
+    _enforce_login_rate_limit(request, login_data.email)
     return auth_service.authenticate(db, login_data)
 
 

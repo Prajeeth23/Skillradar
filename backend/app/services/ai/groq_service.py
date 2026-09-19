@@ -1,5 +1,6 @@
 import json
 import logging
+import re
 import time
 from typing import Any, Dict, Optional, Type, TypeVar
 from pydantic import BaseModel
@@ -10,6 +11,17 @@ logger = logging.getLogger("skillradar.ai")
 logging.basicConfig(level=logging.INFO)
 
 T = TypeVar("T", bound=BaseModel)
+
+
+def sanitize_pii(text: str) -> str:
+    """Sanitize email addresses, phone numbers, and direct PII from prompts prior to external LLM processing."""
+    if not text:
+        return text
+    # Mask email patterns
+    text = re.sub(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', '[ANONYMIZED_EMAIL]', text)
+    # Mask phone patterns
+    text = re.sub(r'\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}', '[ANONYMIZED_PHONE]', text)
+    return text
 
 
 class GroqService:
@@ -38,7 +50,7 @@ class GroqService:
         temperature: float = 0.2,
         max_retries: int = 2,
     ) -> Optional[T]:
-        """Execute Groq chat completion and parse into Pydantic schema with retry backoff."""
+        """Execute Groq chat completion with PII sanitization and parse into Pydantic schema with retry backoff."""
         if not self.is_available():
             logger.info("Groq API key not provided. Diverting to high-fidelity deterministic engine.")
             return None
@@ -46,6 +58,9 @@ class GroqService:
         client = self.client
         if not client:
             return None
+
+        # Scrub PII from input prompts before sending to cloud LLM provider
+        sanitized_user_prompt = sanitize_pii(user_prompt)
 
         # Instruct model to output raw JSON adhering to the model schema
         schema_json = json.dumps(response_model.model_json_schema())
@@ -63,7 +78,7 @@ class GroqService:
                     model=self.model,
                     messages=[
                         {"role": "system", "content": enforced_system_prompt},
-                        {"role": "user", "content": user_prompt},
+                        {"role": "user", "content": sanitized_user_prompt},
                     ],
                     response_format={"type": "json_object"},
                     temperature=temperature,
@@ -104,7 +119,7 @@ class GroqService:
         history: Optional[list] = None,
         temperature: float = 0.4,
     ) -> Optional[str]:
-        """Conversational chat completion without strict schema constraints."""
+        """Conversational chat completion with PII sanitization without strict schema constraints."""
         if not self.is_available():
             return None
 
@@ -112,10 +127,15 @@ class GroqService:
         if not client:
             return None
 
+        sanitized_user_message = sanitize_pii(user_message)
         messages = [{"role": "system", "content": system_prompt}]
         if history:
+            # Sanitize text in chat history if present
+            for h in history:
+                if isinstance(h, dict) and "content" in h:
+                    h["content"] = sanitize_pii(h["content"])
             messages.extend(history)
-        messages.append({"role": "user", "content": user_message})
+        messages.append({"role": "user", "content": sanitized_user_message})
 
         try:
             response = client.chat.completions.create(

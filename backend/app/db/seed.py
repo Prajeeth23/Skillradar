@@ -201,6 +201,64 @@ def seed_database(db: Session):
     # 6. Employees with Realistic Divergent Talent
     employees_seed = [
         {
+            "name": "Arjun Kumar",
+            "email": "arjun.mehta@acme.com",
+            "code": "EMP-1000",
+            "dept": "Engineering",
+            "title": "Backend Developer",
+            "yoe": 5.0,
+            "bio": "Backend engineer focused on payment microservices. AI synthesis reveals divergent leadership, mentorship, and cross-functional UX vectors beyond nominal title.",
+            "projects": [
+                {
+                    "title": "Core Payment Gateway Architecture Migration",
+                    "description": "Led the architectural migration of the payment gateway across 4 microservices.",
+                    "responsibilities": "Coordinated technical consensus and RFC approval across 12 senior engineers. Chaired bi-weekly architecture triage.",
+                    "achievements": "Achieved zero-downtime migration with 42% latency reduction in payment processing.",
+                    "technologies": "Python, FastAPI, PostgreSQL, REST APIs",
+                },
+                {
+                    "title": "Stream Ingestion Telemetry Pipeline",
+                    "description": "Built real-time data processing pipeline for product analytics.",
+                    "responsibilities": "Constructed stream ingestion reducing processing lag by 310ms. Synthesized multi-tenant query bottlenecks.",
+                    "achievements": "Implemented automated pipeline backpressure protocols in Python and Kafka.",
+                    "technologies": "Python, SQL Analytics, FastAPI",
+                },
+                {
+                    "title": "Engineering Mentorship & Onboarding Program",
+                    "description": "Internal initiative to accelerate ramp-up for backend hires and establish engineering culture.",
+                    "responsibilities": "Conducted over 140 comprehensive code reviews. Directly onboarded 4 mid-level developers to service ownership in 60 days.",
+                    "achievements": "Authored the engineering squad backend style guide and testing best practices manual.",
+                    "technologies": "Technical Mentorship, Technical Documentation",
+                },
+                {
+                    "title": "Checkout Flow UX Optimization",
+                    "description": "Cross-functional initiative with design systems team.",
+                    "responsibilities": "Co-authored frontend contract schemas for zero-latency pagination states. Partnered with design systems team to align backend error codes with user modal cues.",
+                    "achievements": "Improved checkout completion rate by 18%; credited by Design VP for outstanding UX empathy.",
+                    "technologies": "UX Collaboration, REST APIs, React & Frontend",
+                },
+                {
+                    "title": "Production Anomaly Detection & Incident Response",
+                    "description": "Engineered automated anomaly detection on Prometheus metric streams.",
+                    "responsibilities": "Detected and mitigated high-severity memory leak in message consumer within 18 minutes. Zero post-incident recurrence on 6 critical database connection exhaustion events.",
+                    "achievements": "Built custom Grafana incident dashboard and PagerDuty automated runbooks.",
+                    "technologies": "Production Incident Triage, System Performance Tuning, Python",
+                },
+            ],
+            "skills": [
+                ("Python", 5, False, "project", "Built payment gateway and data pipelines in FastAPI"),
+                ("PostgreSQL", 4, False, "project", "Designed transactional schemas for payment services"),
+                ("REST APIs", 4, False, "project", "Standardized RESTful microservices architecture"),
+                ("FastAPI", 4, False, "project", "Core framework for payment and telemetry APIs"),
+                ("Cross-Functional Leadership", 4, True, "AI_inferred", "Led architectural migration across 12 senior engineers"),
+                ("SQL Analytics", 4, True, "AI_inferred", "Synthesized multi-tenant query bottlenecks"),
+                ("Technical Mentorship", 5, True, "AI_inferred", "140+ code reviews and onboarded 4 developers in 60 days"),
+                ("UX Collaboration", 4, True, "AI_inferred", "Co-authored frontend contracts and partnered with design systems team"),
+                ("Production Incident Triage", 5, True, "AI_inferred", "Mitigated memory leak in 18 minutes, zero recurrence on 6 critical events"),
+                ("System Performance Tuning", 4, True, "AI_inferred", "Built anomaly detection on Prometheus metrics"),
+            ],
+        },
+        {
             "name": "Marcus Vance",
             "email": "marcus.vance@acme.com",
             "code": "EMP-1001",
@@ -302,26 +360,35 @@ def seed_database(db: Session):
             ],
         },
         {
-            "name": "Priya Sharma",
-            "email": "priya.sharma@acme.com",
+            "name": "Priya Patel",
+            "email": "priya.patel@acme.com",
             "code": "EMP-1004",
-            "dept": "Customer Operations",
-            "title": "Customer Support Specialist",
-            "yoe": 2.5,
-            "bio": "Front-line customer advocate with self-taught database querying and technical diagnosis abilities.",
+            "dept": "Engineering",
+            "title": "Frontend Lead",
+            "yoe": 4.5,
+            "bio": "Frontend engineering lead with deep React expertise and a passion for design systems, accessibility, and cross-functional product collaboration.",
             "projects": [
                 {
-                    "title": "Tier 2 Technical Escalation Playbook",
-                    "description": "Created comprehensive troubleshooting documentation for recurring billing and sync errors.",
-                    "responsibilities": "Documented reproducible steps for engineering bug tickets and wrote SQL queries to verify customer account states.",
-                    "achievements": "Reduced escalation resolution turnaround from 24 hours to 4 hours.",
-                    "technologies": "Technical Documentation, SQL Analytics",
+                    "title": "Design System Component Library v2",
+                    "description": "Led the complete rebuild of the internal React component library with design tokens and WCAG 2.1 compliance.",
+                    "responsibilities": "Architected reusable component primitives, established Storybook documentation standards, and partnered with UX design team.",
+                    "achievements": "Achieved 100% Lighthouse accessibility compliance; adopted across 6 product squads.",
+                    "technologies": "React & Frontend, UX Collaboration, Technical Documentation",
+                },
+                {
+                    "title": "Real-Time Dashboard Performance Optimization",
+                    "description": "Optimized the customer-facing analytics dashboard for sub-second rendering.",
+                    "responsibilities": "Profiled React rendering bottlenecks, implemented virtual scrolling, and memoized expensive data transformations.",
+                    "achievements": "Reduced initial dashboard load from 4.2s to 0.8s; zero customer complaints post-launch.",
+                    "technologies": "React & Frontend, System Performance Tuning",
                 },
             ],
             "skills": [
-                ("SQL Analytics", 3, True, "AI_inferred", "Executed DB queries to diagnose customer account sync anomalies"),
-                ("Technical Documentation", 4, True, "AI_inferred", "Authored Tier 2 escalation runbooks"),
-                ("Production Incident Triage", 3, True, "AI_inferred", "Reproduced edge-case billing bugs for engineering team"),
+                ("React & Frontend", 5, False, "project", "Led design system and dashboard performance optimization"),
+                ("UX Collaboration", 4, False, "project", "Partnered with UX team on design tokens and accessibility"),
+                ("Technical Documentation", 4, True, "AI_inferred", "Authored Storybook documentation standards"),
+                ("Cross-Functional Leadership", 3, True, "AI_inferred", "Component library adopted across 6 product squads"),
+                ("System Performance Tuning", 3, True, "AI_inferred", "Profiled and optimized React rendering bottlenecks"),
             ],
         },
         {
@@ -562,6 +629,17 @@ def seed_database(db: Session):
     # 8. Seed Completed Psychometric Assessments for Marcus, Elena, and Sophia
     psychometric_seed_data = [
         {
+            "code": "EMP-1000",  # Arjun Kumar
+            "token": "token-arjun-kumar-psych-demo",
+            "summary": "Demonstrates exceptional cross-functional leadership agility, engineering mentorship instincts, and analytical precision. Excels at bridging technical execution with strategic product vision. Outstanding adaptability and collaborative intelligence.",
+            "scores": [
+                (TraitType.LEADERSHIP, 87.5),
+                (TraitType.ADAPTABILITY, 83.3),
+                (TraitType.ANALYTICAL_THINKING, 91.7),
+                (TraitType.COLLABORATION, 87.5),
+            ],
+        },
+        {
             "code": "EMP-1001",  # Marcus Vance
             "token": "token-marcus-vance-psych-demo",
             "summary": "Exhibits empathetic stakeholder bridge-building, cross-functional synergy, and decisive leadership guidance. Demonstrates outstanding aptitude for team alignment and complex product initiatives.",
@@ -633,7 +711,7 @@ def seed_database(db: Session):
     print("  Platform Admin: admin@acme.com / admin123")
     print("  HR Lead:        hr.sarah@acme.com / hr123")
     print("  HR Ops:         hr.david@acme.com / hr123")
-    print("  Employees:      marcus.vance@acme.com, elena.rostova@acme.com, sophia.chen@acme.com (password: employee123)")
+    print("  Employees:      arjun.mehta@acme.com, marcus.vance@acme.com, elena.rostova@acme.com, sophia.chen@acme.com, priya.patel@acme.com (password: employee123)")
 
 
 if __name__ == "__main__":

@@ -7,6 +7,11 @@ from jose import JWTError, jwt
 from app.core.config import settings
 
 
+import logging
+
+logger = logging.getLogger("skillradar.security")
+
+
 def _prehash(password: str) -> bytes:
     """Pre-hash password with SHA-256 to eliminate bcrypt's 72-byte truncation attack vector."""
     return hashlib.sha256(password.encode("utf-8")).digest()
@@ -21,6 +26,8 @@ def get_password_hash(password: str) -> str:
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     """Verify plain password against bcrypt hash, supporting both SHA-256 pre-hashed and legacy truncated hashes."""
+    if not plain_password or not hashed_password:
+        return False
     try:
         hash_bytes = hashed_password.encode("utf-8")
         # 1. First check with SHA-256 pre-hash (current enterprise standard)
@@ -29,7 +36,11 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
         # 2. Fallback check with legacy 72-byte slice for backward-compatibility with existing seeded accounts
         legacy_bytes = plain_password.encode("utf-8")[:72]
         return bcrypt.checkpw(legacy_bytes, hash_bytes)
-    except Exception:
+    except (ValueError, TypeError) as exc:
+        logger.warning(f"Password verification invalid input or formatting: {exc}")
+        return False
+    except Exception as exc:
+        logger.error(f"Unexpected error during password verification: {exc}")
         return False
 
 

@@ -13,7 +13,7 @@ def test_hr_can_send_assessment_link(client, hr_headers, db):
     )
     assert response.status_code == 200
     data = response.json()
-    assert data["employee_name"] == "Priya Sharma"
+    assert data["employee_name"] == "Priya Patel"
     assert data["status"] == AssessmentStatus.PENDING.value
     assert len(data["assessment_token"]) > 10
     assert "/assessment/" in data["share_url"]

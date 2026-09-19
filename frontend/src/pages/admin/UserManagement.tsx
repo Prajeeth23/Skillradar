@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Users, Plus, Shield, CheckCircle2, XCircle, Search } from 'lucide-react';
+import { Users, Plus, Shield, CheckCircle2, XCircle, Search, Trash2 } from 'lucide-react';
 import { Badge } from '../../components/common/Badge';
 
 interface UserRecord {
@@ -59,10 +59,38 @@ export const UserManagement: React.FC = () => {
       status: 'ACTIVE',
       createdAt: '2026-01-22',
     },
+    {
+      id: '6',
+      name: 'Arjun Kumar',
+      email: 'arjun.mehta@acme.com',
+      role: 'EMPLOYEE',
+      organization: 'Acme Technologies Inc.',
+      status: 'ACTIVE',
+      createdAt: '2026-01-18',
+    },
+    {
+      id: '7',
+      name: 'Priya Patel',
+      email: 'priya.patel@acme.com',
+      role: 'EMPLOYEE',
+      organization: 'Acme Technologies Inc.',
+      status: 'ACTIVE',
+      createdAt: '2026-01-25',
+    },
+    {
+      id: '8',
+      name: 'Sophia Chen',
+      email: 'sophia.chen@acme.com',
+      role: 'EMPLOYEE',
+      organization: 'Acme Technologies Inc.',
+      status: 'ACTIVE',
+      createdAt: '2026-01-28',
+    },
   ]);
 
   const [search, setSearch] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
 
   // Form states
   const [newName, setNewName] = useState('');
@@ -77,6 +105,11 @@ export const UserManagement: React.FC = () => {
           : u
       )
     );
+  };
+
+  const handleDeleteUser = (id: string) => {
+    setUsers((prev) => prev.filter((u) => u.id !== id));
+    setDeleteConfirm(null);
   };
 
   const handleCreate = (e: React.FormEvent) => {
@@ -183,6 +216,14 @@ export const UserManagement: React.FC = () => {
                     >
                       {u.status === 'ACTIVE' ? 'Deactivate' : 'Activate'}
                     </button>
+                    {u.role !== 'PLATFORM_ADMIN' && (
+                      <button
+                        onClick={() => setDeleteConfirm(u.id)}
+                        className="px-2.5 py-1 rounded text-[11px] font-medium text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer ml-1"
+                      >
+                        <Trash2 className="w-3.5 h-3.5 inline-block" />
+                      </button>
+                    )}
                   </td>
                 </tr>
               ))}
@@ -251,6 +292,32 @@ export const UserManagement: React.FC = () => {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {deleteConfirm && (
+        <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-[#FFFFFF] border border-[#E5E5EA] rounded-2xl max-w-sm w-full p-6 shadow-2xl">
+            <h3 className="text-lg font-bold text-[#1A1A1E] mb-1 font-['Plus_Jakarta_Sans']">Confirm User Deletion</h3>
+            <p className="text-xs text-[#6B6B76] mb-4">
+              This will permanently remove the user account and all associated data. This action cannot be undone.
+            </p>
+            <div className="flex items-center justify-end gap-2">
+              <button
+                onClick={() => setDeleteConfirm(null)}
+                className="px-4 py-2 text-xs font-medium text-[#6B6B76] hover:text-[#1A1A1E] cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => handleDeleteUser(deleteConfirm)}
+                className="px-4 py-2 text-xs font-semibold text-white bg-rose-600 hover:bg-rose-700 rounded-xl transition-all shadow-xs cursor-pointer"
+              >
+                Delete Permanently
+              </button>
+            </div>
           </div>
         </div>
       )}
