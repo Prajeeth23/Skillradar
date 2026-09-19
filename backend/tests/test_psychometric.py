@@ -64,6 +64,46 @@ def test_submit_assessment_scores_correctly(client, hr_headers, db):
     assert scores["ADAPTABILITY"] == 0.0
 
 
+def test_submit_gamified_assessment_with_custom_trait_scores(client, hr_headers, db):
+    # Send link to Liam Tanaka
+    liam = db.query(Employee).filter(Employee.employee_code == "EMP-1003").first()
+    assert liam is not None
+
+    send_resp = client.post(
+        f"/api/v1/psychometrics/{liam.id}/send-link",
+        headers=hr_headers,
+    )
+    assert send_resp.status_code == 200
+    token = send_resp.json()["assessment_token"]
+
+    custom_scores = {
+        "LEADERSHIP": 88.0,
+        "ADAPTABILITY": 92.0,
+        "ANALYTICAL_THINKING": 85.0,
+        "COLLABORATION": 90.0,
+    }
+    custom_summary = "High entrepreneurial orientation with strong creative leadership and high adaptability."
+
+    sub_resp = client.post(
+        f"/api/v1/psychometrics/assessment/{token}/submit",
+        json={
+            "answers": ["mission_1:c1", "mission_2:g2", "mission_3:w1"],
+            "trait_scores": custom_scores,
+            "trait_summary": custom_summary,
+        },
+    )
+    assert sub_resp.status_code == 200
+    sub_data = sub_resp.json()
+    assert sub_data["status"] == AssessmentStatus.COMPLETED.value
+    assert sub_data["trait_summary"] == custom_summary
+
+    saved_scores = {ts["trait"]: ts["score"] for ts in sub_data["trait_scores"]}
+    assert saved_scores["LEADERSHIP"] == 88.0
+    assert saved_scores["ADAPTABILITY"] == 92.0
+    assert saved_scores["ANALYTICAL_THINKING"] == 85.0
+    assert saved_scores["COLLABORATION"] == 90.0
+
+
 def test_employee_can_view_own_trait_scores(client, employee_headers, db):
     marcus = db.query(Employee).filter(Employee.employee_code == "EMP-1001").first()
     assert marcus is not None

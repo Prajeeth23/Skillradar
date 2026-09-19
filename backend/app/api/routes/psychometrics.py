@@ -135,8 +135,19 @@ def submit_assessment(
             detail="Assessment not found.",
         )
 
-    # Score answers
-    scores = psychometric_engine.score_assessment(submission.answers)
+    # Score answers: use custom computed scores if provided, else calculate via engine
+    if submission.trait_scores:
+        scores: Dict[str, float] = {}
+        for trait_enum in TraitType:
+            trait_key = trait_enum.value
+            if trait_key in submission.trait_scores:
+                scores[trait_key] = float(submission.trait_scores[trait_key])
+            elif trait_key.lower() in submission.trait_scores:
+                scores[trait_key] = float(submission.trait_scores[trait_key.lower()])
+            else:
+                scores[trait_key] = 70.0
+    else:
+        scores = psychometric_engine.score_assessment(submission.answers)
 
     # Clear prior scores if any
     db.query(PsychometricTraitScore).filter(
@@ -153,8 +164,11 @@ def submit_assessment(
         db.add(ts)
         trait_score_objects.append(ts)
 
-    # Generate executive summary
-    summary = psychometric_engine.generate_trait_summary(scores)
+    # Generate executive summary or use submitted one
+    if submission.trait_summary and len(submission.trait_summary.strip()) > 10:
+        summary = submission.trait_summary.strip()
+    else:
+        summary = psychometric_engine.generate_trait_summary(scores)
 
     # Update assessment record
     assessment.status = AssessmentStatus.COMPLETED

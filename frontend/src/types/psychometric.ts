@@ -25,10 +25,15 @@ export interface PsychometricAssessment {
 export interface AssessmentQuestionOption {
   id: string;
   text: string;
+  subtext?: string;
+  tag?: string;
 }
 
 export interface AssessmentQuestion {
   id: number;
+  title?: string;
+  domain?: string;
+  xp_reward?: number;
   question: string;
   options: AssessmentQuestionOption[];
 }

@@ -28,15 +28,12 @@ import { InternalOpportunitiesPage } from './pages/employee/InternalOpportunitie
 import { CareerAssistantPage } from './pages/employee/CareerAssistantPage';
 import { AssessmentPage } from './pages/employee/AssessmentPage';
 
-const RootRedirect: React.FC = () => {
-  const { user, isAuthenticated } = useAuth();
-  if (!isAuthenticated || !user) {
-    return <Navigate to="/login" replace />;
-  }
-  if (user.role === 'PLATFORM_ADMIN') return <Navigate to="/admin" replace />;
-  if (user.role === 'HR') return <Navigate to="/hr" replace />;
-  return <Navigate to="/employee" replace />;
-};
+// Stitch Flagship Pages
+import { StitchLayout } from './components/layout/StitchLayout';
+import { DiscoverPage } from './pages/stitch/DiscoverPage';
+import { CapabilityConstellationPage } from './pages/stitch/CapabilityConstellationPage';
+import { DivergencePage } from './pages/stitch/DivergencePage';
+import { WhyArjunPage } from './pages/stitch/WhyArjunPage';
 
 export const App: React.FC = () => {
   return (
@@ -44,12 +41,22 @@ export const App: React.FC = () => {
       <AuthProvider>
         <NotificationProvider>
           <Routes>
-            {/* Public Routes */}
-            <Route path="/login" element={<LoginPage />} />
+            {/* Public Assessment Route - UNTOUCHED */}
             <Route path="/assessment/:token" element={<AssessmentPage />} />
 
-            {/* Root Dispatcher */}
-            <Route path="/" element={<RootRedirect />} />
+            {/* Auth Page */}
+            <Route path="/login" element={<LoginPage />} />
+
+            {/* Stitch Flagship UI Experience */}
+            <Route element={<StitchLayout />}>
+              <Route path="/" element={<DiscoverPage />} />
+              <Route path="/discover" element={<DiscoverPage />} />
+              <Route path="/my-skills" element={<CapabilityConstellationPage />} />
+              <Route path="/divergence" element={<DivergencePage />} />
+              <Route path="/why-arjun" element={<WhyArjunPage />} />
+              <Route path="/opportunities" element={<InternalOpportunitiesPage />} />
+              <Route path="/talent-radar" element={<TalentMatchingPage />} />
+            </Route>
 
             {/* Platform Admin Protected Routes */}
             <Route
