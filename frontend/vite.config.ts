@@ -13,9 +13,11 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
+    dedupe: ['react', 'react-dom'],
   },
   server: {
-    port: 5173,
+    port: 3000,
     host: true,
   },
 })
+

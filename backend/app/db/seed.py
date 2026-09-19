@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 
 from app.db.base import Base
 from app.db.session import engine, SessionLocal
+from app.core.config import settings
 from app.core.security import get_password_hash
 from app.models.organization import Organization
 from app.models.user import User, UserRole
@@ -24,10 +25,15 @@ from app.models.psychometric_assessment import (
 
 
 def seed_database(db: Session):
+    if settings.is_production:
+        print("[SECURITY] Demo seed data execution is disabled in production environment.")
+        return
+
     print("Seeding SkillRadar database with talent demonstration data...")
 
     # Ensure tables exist
     Base.metadata.create_all(bind=engine)
+
 
     # 1. Create Organization
     org = db.query(Organization).filter(Organization.name == "Acme Technologies Inc.").first()

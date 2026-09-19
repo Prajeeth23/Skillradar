@@ -71,57 +71,61 @@ export const StitchNavbar: React.FC = () => {
     <>
       <header className="fixed top-0 inset-x-0 z-50 bg-[#faf9fd]/90 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.04)] border-b border-[#e3e2e6]/60">
         <div className="h-16 max-w-7xl mx-auto px-4 sm:px-8 flex items-center justify-between gap-4">
-          {/* Brand Logo */}
-          <Link to="/discover" className="flex items-center gap-2 shrink-0 group">
-            <div className="w-8 h-8 rounded-lg bg-[#2a14b4] flex items-center justify-center text-white shadow-sm group-hover:scale-105 transition-transform">
-              <span className="material-symbols-outlined text-[20px]">radar</span>
-            </div>
-            <span className="font-['Plus_Jakarta_Sans'] text-[12px] uppercase tracking-wider text-[#1b1b1f] font-bold">
+          {/* Brand Logo matching reference screenshot */}
+          <Link to="/discover" className="flex items-center gap-2.5 shrink-0 group">
+            <svg className="w-6 h-6 text-[#2a14b4]" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <circle cx="12" cy="12" r="2.5" fill="#2a14b4" />
+              <circle cx="6" cy="7" r="1.75" fill="#712ae2" />
+              <circle cx="18" cy="7" r="1.75" fill="#712ae2" />
+              <circle cx="5" cy="16" r="1.75" fill="#2a14b4" />
+              <circle cx="19" cy="16" r="1.75" fill="#2a14b4" />
+              <circle cx="12" cy="20" r="1.75" fill="#712ae2" />
+              <path d="M12 12L6 7M12 12L18 7M12 12L5 16M12 12L19 16M12 12L12 20" stroke="#712ae2" strokeWidth="1.2" strokeOpacity="0.6" />
+            </svg>
+            <span className="font-['Plus_Jakarta_Sans'] text-[13px] tracking-wider text-[#1b1b1f] font-bold">
               SKILLRADAR
             </span>
           </Link>
 
           {/* Navigation Links */}
-          <nav className="hidden xl:flex items-center gap-1">
+          <nav className="hidden xl:flex items-center gap-1.5">
             {navItems.map(item => {
               const active = isCurrent(item.path);
               return (
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`px-3 py-1.5 rounded-lg text-[13px] transition-all font-['Plus_Jakarta_Sans'] ${
+                  className={`px-3.5 py-1.5 rounded-lg text-[13px] transition-all font-['Plus_Jakarta_Sans'] ${
                     active
-                      ? 'bg-[#e9e7ec] text-[#1b1b1f] font-semibold shadow-xs'
-                      : 'text-[#464554] hover:bg-[#e9e7ec]/60 hover:text-[#1b1b1f]'
+                      ? 'bg-[#f0eff4] text-[#1b1b1f] font-medium shadow-xs'
+                      : 'text-[#464554] hover:bg-[#f0eff4]/60 hover:text-[#1b1b1f]'
                   }`}
                 >
                   {item.label}
                 </Link>
               );
             })}
-
-            {/* Link to Psychometric Assessment without altering its UI */}
-            <Link
-              to="/assessment/token-liam-tanaka-test-gamified"
-              className="ml-2 px-2.5 py-1 rounded-full text-[11px] font-semibold tracking-wide uppercase bg-purple-100 text-purple-700 hover:bg-purple-200 transition-colors flex items-center gap-1 border border-purple-200"
-              title="Open Gamified Psychometric Assessment"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-purple-600 animate-pulse"></span>
-              Psychometric Test
-            </Link>
           </nav>
 
           {/* Right Action Icons */}
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex items-center gap-2.5 shrink-0">
             {/* Search Button */}
             <button
               aria-label="Search"
               onClick={() => setShowSearch(true)}
-              className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-[#f5f3f7] text-[#464554] hover:bg-[#e9e7ec] hover:text-[#1b1b1f] transition-colors cursor-pointer"
+              className="p-1.5 rounded-lg text-[#525160] hover:bg-[#f0eff4] hover:text-[#1b1b1f] transition-colors cursor-pointer"
               type="button"
             >
-              <span className="material-symbols-outlined text-[18px]">search</span>
-              <span className="hidden md:inline font-['JetBrains_Mono'] text-[11px] text-[#777586]">⌘K</span>
+              <span className="material-symbols-outlined text-[19px]">search</span>
+            </button>
+
+            {/* Filter / Tune Icon */}
+            <button
+              aria-label="Filter"
+              className="p-1.5 rounded-lg text-[#525160] hover:bg-[#f0eff4] hover:text-[#1b1b1f] transition-colors cursor-pointer"
+              type="button"
+            >
+              <span className="material-symbols-outlined text-[19px]">tune</span>
             </button>
 
             {/* Notifications Button */}
@@ -129,14 +133,15 @@ export const StitchNavbar: React.FC = () => {
               <button
                 aria-label="Notifications"
                 onClick={() => setShowNotifications(prev => !prev)}
-                className="relative p-2 rounded-lg text-[#464554] hover:bg-[#e9e7ec] hover:text-[#1b1b1f] transition-colors cursor-pointer"
+                className="relative p-1.5 rounded-lg text-[#525160] hover:bg-[#f0eff4] hover:text-[#1b1b1f] transition-colors cursor-pointer"
                 type="button"
               >
                 <span className="material-symbols-outlined text-[20px]">notifications</span>
                 {unreadCount > 0 && (
-                  <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#712ae2] ring-2 ring-[#faf9fd]"></span>
+                  <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-[#712ae2] ring-2 ring-[#faf9fd]"></span>
                 )}
               </button>
+
 
               {/* Notification Popover */}
               {showNotifications && (
