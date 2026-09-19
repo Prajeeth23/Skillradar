@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from app.core.dependencies import get_db, get_current_user
-from app.core.permissions import RoleChecker, verify_employee_self_or_hr
+from app.core.permissions import RoleChecker, verify_employee_self_or_hr, verify_organization_access
 from app.models.user import User, UserRole
 from app.models.employee import Employee
 from app.models.psychometric_assessment import (
@@ -46,6 +46,8 @@ def send_assessment_link(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Employee not found.",
         )
+    verify_organization_access(current_user, employee.user.organization_id)
+
 
     # Check for existing pending assessment or create a fresh one
     assessment = (
@@ -210,8 +212,9 @@ def get_employee_psychometrics(
             detail="Employee not found.",
         )
 
-    # Ownership check: Employee can view own; HR/Admin can view any
-    verify_employee_self_or_hr(current_user, employee.user_id)
+    # Ownership check: Employee can view own; HR/Admin within same organization can view
+    verify_employee_self_or_hr(current_user, employee.user_id, employee.user.organization_id)
+
 
     # Find latest completed assessment, or pending
     assessment = (

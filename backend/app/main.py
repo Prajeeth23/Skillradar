@@ -30,9 +30,9 @@ app = FastAPI(
     title=settings.APP_NAME,
     description="SkillRadar — Beyond Titles. Discover Talent. (AI-Powered Internal Talent Discovery & Mobility Platform)",
     version="1.0.0",
-    docs_url="/docs",
-    redoc_url="/redoc",
-    openapi_url="/openapi.json",
+    docs_url="/docs" if settings.show_docs else None,
+    redoc_url="/redoc" if settings.show_docs else None,
+    openapi_url="/openapi.json" if settings.show_docs else None,
     lifespan=lifespan,
 )
 
@@ -41,9 +41,10 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.ALLOWED_ORIGINS,
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allow_headers=["Content-Type", "Authorization", "Accept", "Origin", "X-Requested-With"],
 )
+
 
 # Mount API V1 router
 app.include_router(api_router, prefix=settings.API_V1_PREFIX)

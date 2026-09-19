@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 
 from app.db.session import get_db
 from app.core.dependencies import get_current_user, get_current_employee, require_hr
+from app.core.permissions import verify_organization_access
 from app.models.user import User
 from app.models.employee import Employee
 from app.models.role import InternalRole
@@ -23,9 +24,13 @@ router = APIRouter(prefix="/matching", tags=["AI Role Matching"])
 def run_role_matching(
     role_id: str,
     body: RoleMatchRequest = RoleMatchRequest(),
+    current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
     """Run AI Candidate Matching for a role across organization employees, computing explainability and evidence."""
+    role = role_service.get_role_by_id(db, role_id)
+    verify_organization_access(current_user, role.organization_id)
+
     return role_matching_engine.match_role_candidates(
         db=db,
         role_id=role_id,
@@ -39,10 +44,13 @@ def get_existing_role_matches(
     role_id: str,
     min_score: float = Query(0.0, ge=0.0, le=100.0),
     limit: int = Query(20, ge=1, le=100),
+    current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
     """Retrieve pre-evaluated candidate matches and AI explanations for an internal role."""
     role = role_service.get_role_by_id(db, role_id)
+    verify_organization_access(current_user, role.organization_id)
+
     matches = (
         db.query(RoleMatch)
         .filter(RoleMatch.role_id == role_id, RoleMatch.match_score >= min_score)
@@ -62,6 +70,7 @@ def get_existing_role_matches(
         total_candidates_evaluated=len(top_matches),
         top_matches=top_matches,
     )
+
 
 
 @router.get("/me/recommendations", response_model=List[EmployeeRoleMatchCard])

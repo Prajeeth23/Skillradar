@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 
 from app.db.session import get_db
 from app.core.dependencies import get_current_user, require_hr
+from app.core.permissions import verify_organization_access
 from app.models.user import User
 from app.schemas.role import InternalRoleCreate, InternalRoleRead, InternalRoleUpdate
 from app.services.role_service import role_service
@@ -26,9 +27,14 @@ def list_roles(
 
 
 @router.get("/{role_id}", response_model=InternalRoleRead)
-def get_role_details(role_id: str, db: Session = Depends(get_db)):
+def get_role_details(
+    role_id: str,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
     """Retrieve full role details, description, and required skill specifications."""
     role = role_service.get_role_by_id(db, role_id)
+    verify_organization_access(current_user, role.organization_id)
     return role_service.format_role_read(role)
 
 
@@ -51,7 +57,11 @@ def create_internal_role(
 def update_internal_role(
     role_id: str,
     update_in: InternalRoleUpdate,
+    current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
     """Update internal role details or lifecycle status (HR only)."""
+    role = role_service.get_role_by_id(db, role_id)
+    verify_organization_access(current_user, role.organization_id)
     return role_service.update_role(db, role_id, update_in)
+

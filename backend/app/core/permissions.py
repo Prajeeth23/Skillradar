@@ -29,10 +29,16 @@ def verify_organization_access(current_user: User, organization_id: Optional[str
         )
 
 
-def verify_employee_self_or_hr(current_user: User, target_employee_user_id: str) -> None:
-    """Ensure an employee can only view/modify their own dossier, or HR within same org."""
+def verify_employee_self_or_hr(
+    current_user: User,
+    target_employee_user_id: str,
+    target_organization_id: Optional[str] = None,
+) -> None:
+    """Ensure an employee can only view/modify their own dossier, or HR within the SAME organization."""
     if current_user.role == UserRole.PLATFORM_ADMIN:
         return
+    if target_organization_id is not None:
+        verify_organization_access(current_user, target_organization_id)
     if current_user.role == UserRole.HR:
         return
     if current_user.role == UserRole.EMPLOYEE and current_user.id != target_employee_user_id:
@@ -40,3 +46,4 @@ def verify_employee_self_or_hr(current_user: User, target_employee_user_id: str)
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Access denied: Employees can only view or manage their own private dossier.",
         )
+

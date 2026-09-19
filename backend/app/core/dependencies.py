@@ -39,7 +39,18 @@ def get_current_user(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="User account is deactivated.",
         )
+
+    # Multi-tenant claim verification: Ensure token org_id matches the user's active database organization
+    token_org_id = payload.get("org_id")
+    if token_org_id and user.role != UserRole.PLATFORM_ADMIN:
+        if str(user.organization_id) != str(token_org_id):
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Organization mismatch between token claim and user record.",
+            )
+
     return user
+
 
 
 def get_current_active_user(current_user: User = Depends(get_current_user)) -> User:

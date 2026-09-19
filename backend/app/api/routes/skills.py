@@ -24,9 +24,10 @@ def run_divergence_analysis(
     """Trigger the Divergence Engine: Contrasts the employee's official job title with
     actual project work to discover hidden and transferable skills backed by evidence."""
     employee = employee_service.get_employee_by_id(db, employee_id)
-    verify_employee_self_or_hr(current_user, employee.user_id)
+    verify_employee_self_or_hr(current_user, employee.user_id, employee.user.organization_id)
 
     return divergence_engine.analyze_employee(db, employee)
+
 
 
 @router.get("", response_model=List[SkillRead])
