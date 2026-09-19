@@ -1,15 +1,16 @@
 import { AuthUser } from '../types/auth';
 
 export const DEMO_USERS: Record<string, { user: AuthUser; token: string }> = {
-  admin: {
+  employee_arjun: {
     user: {
-      id: 'usr-admin-01',
-      name: 'Platform Administrator',
-      email: 'admin@acme.com',
-      role: 'PLATFORM_ADMIN',
+      id: 'usr-emp-arjun',
+      name: 'Arjun Kumar',
+      email: 'arjun.mehta@acme.com',
+      role: 'EMPLOYEE',
       organization_id: 'org-acme-01',
+      employee_id: 'emp-arjun-01',
     },
-    token: 'mock-jwt-token-admin',
+    token: 'mock-jwt-token-arjun',
   },
   hr: {
     user: {
@@ -21,16 +22,16 @@ export const DEMO_USERS: Record<string, { user: AuthUser; token: string }> = {
     },
     token: 'mock-jwt-token-hr',
   },
-  employee_marcus: {
+  employee_priya: {
     user: {
-      id: 'usr-emp-01',
-      name: 'Marcus Vance',
-      email: 'marcus.vance@acme.com',
+      id: 'usr-emp-priya',
+      name: 'Priya Patel',
+      email: 'priya.patel@acme.com',
       role: 'EMPLOYEE',
       organization_id: 'org-acme-01',
-      employee_id: 'emp-1001',
+      employee_id: 'emp-priya-01',
     },
-    token: 'mock-jwt-token-marcus',
+    token: 'mock-jwt-token-priya',
   },
   employee_elena: {
     user: {
@@ -43,15 +44,26 @@ export const DEMO_USERS: Record<string, { user: AuthUser; token: string }> = {
     },
     token: 'mock-jwt-token-elena',
   },
-  employee_sophia: {
+  employee_marcus: {
     user: {
-      id: 'usr-emp-03',
-      name: 'Sophia Chen',
-      email: 'sophia.chen@acme.com',
+      id: 'usr-emp-01',
+      name: 'Marcus Vance',
+      email: 'marcus.vance@acme.com',
       role: 'EMPLOYEE',
       organization_id: 'org-acme-01',
-      employee_id: 'emp-1003',
+      employee_id: 'emp-1001',
     },
-    token: 'mock-jwt-token-sophia',
+    token: 'mock-jwt-token-marcus',
+  },
+  admin: {
+    user: {
+      id: 'usr-admin-01',
+      name: 'Platform Administrator',
+      email: 'admin@acme.com',
+      role: 'PLATFORM_ADMIN',
+      organization_id: 'org-acme-01',
+    },
+    token: 'mock-jwt-token-admin',
   },
 };
+

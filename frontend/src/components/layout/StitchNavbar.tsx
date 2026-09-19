@@ -213,27 +213,35 @@ export const StitchNavbar: React.FC = () => {
                       Switch Persona
                     </div>
                     <button
-                      onClick={() => handlePersonaSwitch('arjun')}
-                      className="w-full text-left px-3 py-1.5 hover:bg-[#f5f3f7] flex items-center justify-between text-[#1b1b1f]"
+                      onClick={() => handlePersonaSwitch('employee_arjun')}
+                      className="w-full text-left px-3 py-1.5 hover:bg-[#f5f3f7] flex items-center justify-between text-[#1b1b1f] cursor-pointer"
                     >
-                      <span>Arjun Kumar (Employee)</span>
+                      <span>Arjun Kumar (Engineer)</span>
                       <span className="text-[10px] bg-indigo-100 text-indigo-700 px-1.5 py-0.5 rounded font-mono">IC-5</span>
                     </button>
                     <button
-                      onClick={() => handlePersonaSwitch('priya')}
-                      className="w-full text-left px-3 py-1.5 hover:bg-[#f5f3f7] flex items-center justify-between text-[#1b1b1f]"
+                      onClick={() => handlePersonaSwitch('hr')}
+                      className="w-full text-left px-3 py-1.5 hover:bg-[#f5f3f7] flex items-center justify-between text-[#1b1b1f] cursor-pointer"
                     >
-                      <span>Priya Sharma (HR Lead)</span>
+                      <span>Sarah Jenkins (HR Lead)</span>
                       <span className="text-[10px] bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded font-mono">HR</span>
                     </button>
                     <button
-                      onClick={() => handlePersonaSwitch('elena')}
-                      className="w-full text-left px-3 py-1.5 hover:bg-[#f5f3f7] flex items-center justify-between text-[#1b1b1f]"
+                      onClick={() => handlePersonaSwitch('employee_priya')}
+                      className="w-full text-left px-3 py-1.5 hover:bg-[#f5f3f7] flex items-center justify-between text-[#1b1b1f] cursor-pointer"
                     >
-                      <span>Elena Vance (Admin)</span>
+                      <span>Priya Patel (Designer)</span>
+                      <span className="text-[10px] bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded font-mono">UI/UX</span>
+                    </button>
+                    <button
+                      onClick={() => handlePersonaSwitch('admin')}
+                      className="w-full text-left px-3 py-1.5 hover:bg-[#f5f3f7] flex items-center justify-between text-[#1b1b1f] cursor-pointer"
+                    >
+                      <span>Platform Admin</span>
                       <span className="text-[10px] bg-purple-100 text-purple-700 px-1.5 py-0.5 rounded font-mono">ADMIN</span>
                     </button>
                   </div>
+
 
                   <div className="py-1">
                     <Link

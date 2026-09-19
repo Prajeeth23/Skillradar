@@ -1,18 +1,65 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+interface WorkItem {
+  title: string;
+  metrics: string;
+  tags: string[];
+}
+
+interface CapabilityItem {
+  name: string;
+  score: string;
+}
+
+const WORK_ITEMS: WorkItem[] = [
+  {
+    title: 'Build high-throughput APIs',
+    metrics: '18 PRs',
+    tags: ['Kafka', 'Python', 'gRPC'],
+  },
+  {
+    title: 'Analyze telemetry & production failures',
+    metrics: '6 Postmortens',
+    tags: ['Datadog', 'Root Cause'],
+  },
+  {
+    title: 'Mentor junior engineers & architecture reviews',
+    metrics: '44 Threads',
+    tags: ['Mentorship', 'System RFCs'],
+  },
+  {
+    title: 'Coordinate cross-functional system decisions with UX',
+    metrics: 'Weekly Synced',
+    tags: ['Design Systems', 'Latency Budgets'],
+  },
+  {
+    title: 'Prototype vector search & pipeline scripts',
+    metrics: 'R&D Spike',
+    tags: ['pgvector', 'Embeddings'],
+  },
+];
+
+const CAPABILITIES: CapabilityItem[] = [
+  { name: 'Technical Leadership', score: '87%' },
+  { name: 'Data Analysis & Pipeline Design', score: '84%' },
+  { name: 'Engineering Mentorship', score: '91%' },
+  { name: 'UX Systems Collaboration', score: '81%' },
+  { name: 'Distributed Problem Solving', score: '95%' },
+];
+
 export const DiscoverPage: React.FC = () => {
   return (
     <div className="flex flex-col w-full min-h-screen bg-white">
       {/* Hero & Ambient Glow */}
-      <div className="relative w-full overflow-hidden pt-12 pb-16">
-        <div className="absolute inset-0 pointer-events-none opacity-50">
-          <div className="absolute -top-28 left-1/2 -translate-x-1/2 w-[850px] h-[450px] rounded-full bg-gradient-to-b from-[#e8e4fb]/60 via-[#f1edfd]/30 to-transparent blur-3xl"></div>
+      <div className="relative w-full overflow-hidden pt-10 pb-16">
+        <div className="absolute inset-0 pointer-events-none opacity-40">
+          <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[850px] h-[400px] rounded-full bg-gradient-to-b from-[#e8e4fb]/70 via-[#f1edfd]/30 to-transparent blur-3xl"></div>
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-8 flex flex-col items-center">
           {/* Engine Status Pill */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#f4f3f7] border border-[#e3e2e6]/60 text-[#464554] mb-7 shadow-xs">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#f4f3f7] border border-[#e3e2e6]/70 text-[#464554] mb-7 shadow-xs">
             <span className="w-2 h-2 rounded-full bg-[#712ae2]"></span>
             <span className="font-['JetBrains_Mono'] text-[11px] uppercase tracking-wider text-[#1b1b1f] font-medium">
               SYNTHESIS ENGINE v4.2 LIVE
@@ -25,7 +72,7 @@ export const DiscoverPage: React.FC = () => {
 
           {/* Headline */}
           <div className="max-w-4xl text-center space-y-4">
-            <h1 className="font-['Plus_Jakarta_Sans'] text-4xl sm:text-5xl lg:text-[56px] text-[#1b1b1f] font-bold tracking-tight leading-[1.1]">
+            <h1 className="font-['Plus_Jakarta_Sans'] text-4xl sm:text-5xl lg:text-[54px] text-[#1b1b1f] font-bold tracking-tight leading-[1.12]">
               Your title is only <span className="text-[#2a14b4] italic font-serif font-normal">the beginning.</span>
             </h1>
             <p className="font-['Plus_Jakarta_Sans'] text-base sm:text-[17px] text-[#525160] max-w-2xl mx-auto leading-relaxed">
@@ -33,10 +80,10 @@ export const DiscoverPage: React.FC = () => {
             </p>
           </div>
 
-          {/* Telemetry Trace Showcase Section */}
+          {/* Telemetry Trace Showcase Card */}
           <div className="w-full mt-12 max-w-6xl">
-            {/* Top Telemetry Trace Subheader */}
-            <div className="flex flex-wrap items-center justify-between pb-3.5 mb-3 text-[#525160] border-b border-[#e3e2e6]/80 px-1 gap-3">
+            {/* Top Telemetry Trace Header */}
+            <div className="flex flex-wrap items-center justify-between pb-3.5 mb-4 text-[#525160] border-b border-[#e3e2e6]/80 px-1 gap-3">
               <div className="flex items-center gap-2">
                 <svg className="w-5 h-5 text-[#2a14b4]" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                   <circle cx="12" cy="12" r="2.5" fill="#2a14b4" />
@@ -67,10 +114,10 @@ export const DiscoverPage: React.FC = () => {
               </div>
             </div>
 
-            {/* 3-Column Architecture Matrix */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-2 lg:gap-3 items-stretch relative">
-              {/* Column 1: Current Title */}
-              <div className="lg:col-span-3 flex flex-col justify-between p-6 rounded-2xl bg-[#f4f3f7] relative">
+            {/* Main Architecture Diagram Container */}
+            <div className="flex flex-col lg:flex-row items-stretch gap-0 w-full relative">
+              {/* Column 1: Current Title Card */}
+              <div className="w-full lg:w-[260px] shrink-0 flex flex-col justify-between p-6 rounded-2xl bg-[#f4f3f7] border border-[#e3e2e6]/50 relative z-10">
                 <div>
                   <div className="flex items-center gap-2 mb-4">
                     <span className="w-2 h-2 rounded-full bg-[#777586]"></span>
@@ -78,7 +125,7 @@ export const DiscoverPage: React.FC = () => {
                       Current Title
                     </span>
                   </div>
-                  <h2 className="font-['Plus_Jakarta_Sans'] text-2xl lg:text-[26px] text-[#1b1b1f] font-bold tracking-tight">
+                  <h2 className="font-['Plus_Jakarta_Sans'] text-2xl text-[#1b1b1f] font-bold tracking-tight">
                     Backend Developer
                   </h2>
                   <div className="mt-3 space-y-1">
@@ -87,7 +134,7 @@ export const DiscoverPage: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="mt-12 bg-transparent">
+                <div className="mt-14 pt-2">
                   <div className="flex items-center justify-between text-[#525160] font-['JetBrains_Mono'] text-[12px]">
                     <span>HR Visibility Scope</span>
                     <span className="font-bold text-[#dc2626]">22%</span>
@@ -101,218 +148,111 @@ export const DiscoverPage: React.FC = () => {
                 </div>
               </div>
 
-              {/* SVG Connectors 1: Converging/Diverging lines */}
-              <div className="hidden lg:flex lg:col-span-1 items-center justify-center relative py-6">
-                <svg className="w-full h-[400px]" viewBox="0 0 80 400" fill="none">
-                  {/* Central Node and Horizontal Trunk */}
-                  <line x1="0" y1="200" x2="25" y2="200" stroke="#2a14b4" strokeWidth="2" />
-                  <circle cx="25" cy="200" r="3" fill="#2a14b4" />
+              {/* Connector 1: Bezier Fan SVG */}
+              <div className="hidden lg:flex w-14 shrink-0 items-stretch relative">
+                <svg className="w-full h-full" viewBox="0 0 56 100" preserveAspectRatio="none" fill="none">
+                  {/* Left Horizontal Stem & Node */}
+                  <line x1="0" y1="50" x2="16" y2="50" stroke="#2a14b4" strokeWidth="2" vectorEffect="non-scaling-stroke" />
+                  <circle cx="16" cy="50" r="3" fill="#2a14b4" />
 
-                  {/* 5 Bezier Lines spreading out to Column 2 items */}
-                  <path d="M 25,200 C 50,200 55,42 80,42" stroke="#c7c4d7" strokeWidth="1.2" strokeDasharray="3 3" />
-                  <path d="M 25,200 C 50,200 55,122 80,122" stroke="#c7c4d7" strokeWidth="1.2" />
-                  <path d="M 25,200 C 50,200 55,200 80,200" stroke="#2a14b4" strokeWidth="1.8" />
-                  <path d="M 25,200 C 50,200 55,278 80,278" stroke="#c7c4d7" strokeWidth="1.2" />
-                  <path d="M 25,200 C 50,200 55,356 80,356" stroke="#c7c4d7" strokeWidth="1.2" strokeDasharray="3 3" />
+                  {/* 5 Smooth Bezier Curves to right-side items at 10%, 30%, 50%, 70%, 90% */}
+                  <path d="M 16,50 C 36,50 36,10 56,10" stroke="#c7c4d7" strokeWidth="1.2" strokeDasharray="3 3" vectorEffect="non-scaling-stroke" />
+                  <path d="M 16,50 C 36,50 36,30 56,30" stroke="#c7c4d7" strokeWidth="1.2" vectorEffect="non-scaling-stroke" />
+                  <path d="M 16,50 C 36,50 36,50 56,50" stroke="#2a14b4" strokeWidth="1.8" vectorEffect="non-scaling-stroke" />
+                  <path d="M 16,50 C 36,50 36,70 56,70" stroke="#c7c4d7" strokeWidth="1.2" vectorEffect="non-scaling-stroke" />
+                  <path d="M 16,50 C 36,50 36,90 56,90" stroke="#c7c4d7" strokeWidth="1.2" strokeDasharray="3 3" vectorEffect="non-scaling-stroke" />
                 </svg>
               </div>
 
-              {/* Column 2: Actual Work (Last 90 Days) */}
-              <div className="lg:col-span-4 flex flex-col justify-between p-5 rounded-2xl bg-[#f8f7fa] border border-[#e3e2e6]/50">
-                <div>
-                  <div className="flex items-center justify-between mb-3.5">
-                    <div className="flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full bg-[#2a14b4]"></span>
-                      <span className="font-['Plus_Jakarta_Sans'] text-[11px] uppercase tracking-wider text-[#1b1b1f] font-bold">
-                        Actual Work
-                      </span>
-                    </div>
-                    <span className="font-['JetBrains_Mono'] text-[11px] text-[#777586]">Last 90 Days</span>
+              {/* Coordinated Columns 2 & 3: 5 Rows with Guaranteed Precision Arrows */}
+              <div className="flex-1 flex flex-col justify-between p-4 sm:p-5 rounded-2xl bg-[#f8f7fa] border border-[#e3e2e6]/50">
+                {/* Headers */}
+                <div className="flex items-center justify-between pb-3 mb-2 border-b border-[#e3e2e6]/40">
+                  {/* Left Column Header */}
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-[#2a14b4]"></span>
+                    <span className="font-['Plus_Jakarta_Sans'] text-[11px] uppercase tracking-wider text-[#1b1b1f] font-bold">
+                      Actual Work
+                    </span>
+                    <span className="font-['JetBrains_Mono'] text-[11px] text-[#777586] ml-4">Last 90 Days</span>
                   </div>
 
-                  <div className="space-y-2.5 font-['Plus_Jakarta_Sans'] text-[13px]">
-                    {/* Item 1 */}
-                    <div className="p-3 rounded-xl bg-white shadow-xs border border-[#e3e2e6]/70 hover:border-[#c7c4d7] transition-all">
-                      <div className="flex items-start justify-between gap-2">
-                        <span className="font-semibold text-[#1b1b1f] text-[13px]">Build high-throughput APIs</span>
-                        <span className="font-['JetBrains_Mono'] text-[11px] text-[#777586] shrink-0">18 PRs</span>
-                      </div>
-                      <div className="flex gap-1.5 mt-2">
-                        <span className="font-['JetBrains_Mono'] text-[10px] px-2 py-0.5 rounded bg-[#f0eff4] text-[#525160]">Kafka</span>
-                        <span className="font-['JetBrains_Mono'] text-[10px] px-2 py-0.5 rounded bg-[#f0eff4] text-[#525160]">Python</span>
-                        <span className="font-['JetBrains_Mono'] text-[10px] px-2 py-0.5 rounded bg-[#f0eff4] text-[#525160]">gRPC</span>
-                      </div>
-                    </div>
-
-                    {/* Item 2 */}
-                    <div className="p-3 rounded-xl bg-white shadow-xs border border-[#e3e2e6]/70 hover:border-[#c7c4d7] transition-all">
-                      <div className="flex items-start justify-between gap-2">
-                        <span className="font-semibold text-[#1b1b1f] text-[13px]">Analyze telemetry & production failures</span>
-                        <span className="font-['JetBrains_Mono'] text-[11px] text-[#777586] shrink-0">6 Postmortens</span>
-                      </div>
-                      <div className="flex gap-1.5 mt-2">
-                        <span className="font-['JetBrains_Mono'] text-[10px] px-2 py-0.5 rounded bg-[#f0eff4] text-[#525160]">Datadog</span>
-                        <span className="font-['JetBrains_Mono'] text-[10px] px-2 py-0.5 rounded bg-[#f0eff4] text-[#525160]">Root Cause</span>
-                      </div>
-                    </div>
-
-                    {/* Item 3 */}
-                    <div className="p-3 rounded-xl bg-white shadow-xs border border-[#e3e2e6]/70 hover:border-[#c7c4d7] transition-all">
-                      <div className="flex items-start justify-between gap-2">
-                        <span className="font-semibold text-[#1b1b1f] text-[13px]">Mentor junior engineers & architecture reviews</span>
-                        <span className="font-['JetBrains_Mono'] text-[11px] text-[#777586] shrink-0">44 Threads</span>
-                      </div>
-                      <div className="flex gap-1.5 mt-2">
-                        <span className="font-['JetBrains_Mono'] text-[10px] px-2 py-0.5 rounded bg-[#f0eff4] text-[#525160]">Mentorship</span>
-                        <span className="font-['JetBrains_Mono'] text-[10px] px-2 py-0.5 rounded bg-[#f0eff4] text-[#525160]">System RFCs</span>
-                      </div>
-                    </div>
-
-                    {/* Item 4 */}
-                    <div className="p-3 rounded-xl bg-white shadow-xs border border-[#e3e2e6]/70 hover:border-[#c7c4d7] transition-all">
-                      <div className="flex items-start justify-between gap-2">
-                        <span className="font-semibold text-[#1b1b1f] text-[13px]">Coordinate cross-functional system decisions with UX</span>
-                        <span className="font-['JetBrains_Mono'] text-[11px] text-[#777586] shrink-0">Weekly Synced</span>
-                      </div>
-                      <div className="flex gap-1.5 mt-2">
-                        <span className="font-['JetBrains_Mono'] text-[10px] px-2 py-0.5 rounded bg-[#f0eff4] text-[#525160]">Design Systems</span>
-                        <span className="font-['JetBrains_Mono'] text-[10px] px-2 py-0.5 rounded bg-[#f0eff4] text-[#525160]">Latency Budgets</span>
-                      </div>
-                    </div>
-
-                    {/* Item 5 */}
-                    <div className="p-3 rounded-xl bg-white shadow-xs border border-[#e3e2e6]/70 hover:border-[#c7c4d7] transition-all">
-                      <div className="flex items-start justify-between gap-2">
-                        <span className="font-semibold text-[#1b1b1f] text-[13px]">Prototype vector search & pipeline scripts</span>
-                        <span className="font-['JetBrains_Mono'] text-[11px] text-[#777586] shrink-0">R&D Spike</span>
-                      </div>
-                      <div className="flex gap-1.5 mt-2">
-                        <span className="font-['JetBrains_Mono'] text-[10px] px-2 py-0.5 rounded bg-[#f0eff4] text-[#525160]">pgvector</span>
-                        <span className="font-['JetBrains_Mono'] text-[10px] px-2 py-0.5 rounded bg-[#f0eff4] text-[#525160]">Embeddings</span>
-                      </div>
-                    </div>
+                  {/* Right Column Header */}
+                  <div className="flex items-center gap-2 pr-2">
+                    <span className="w-2 h-2 rounded-full bg-[#712ae2]"></span>
+                    <span className="font-['Plus_Jakarta_Sans'] text-[11px] uppercase tracking-wider text-[#712ae2] font-bold">
+                      Discovered Capabilities
+                    </span>
+                    <span className="text-[#712ae2] text-[14px]">✦</span>
                   </div>
                 </div>
 
-                <div className="mt-4 text-right font-['JetBrains_Mono'] text-[11px] text-[#777586]">
-                  Continuous ingestion via GitHub, Linear & Slack
-                </div>
-              </div>
+                {/* 5 Row Pairs */}
+                <div className="space-y-3 font-['Plus_Jakarta_Sans']">
+                  {WORK_ITEMS.map((work, idx) => {
+                    const cap = CAPABILITIES[idx];
+                    const isHighlighted = idx === 2; // Engineering Mentorship highlight
 
-              {/* SVG Connectors 2: Horizontal purple arrow lines */}
-              <div className="hidden lg:flex lg:col-span-1 items-center justify-center relative py-6">
-                <svg className="w-full h-[400px]" viewBox="0 0 80 400" fill="none">
-                  {/* Line 1 */}
-                  <line x1="0" y1="42" x2="72" y2="42" stroke="#c7c4d7" strokeWidth="1.2" />
-                  <polygon points="78,42 71,39 71,45" fill="#c7c4d7" />
+                    return (
+                      <div key={work.title} className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3 w-full">
+                        {/* Actual Work Card */}
+                        <div className="flex-1 p-3 rounded-xl bg-white shadow-xs border border-[#e3e2e6]/70 hover:border-[#c7c4d7] transition-all flex flex-col justify-between min-h-[72px]">
+                          <div className="flex items-start justify-between gap-2">
+                            <span className="font-semibold text-[#1b1b1f] text-[13px]">{work.title}</span>
+                            <span className="font-['JetBrains_Mono'] text-[11px] text-[#777586] shrink-0">{work.metrics}</span>
+                          </div>
+                          <div className="flex gap-1.5 mt-2 flex-wrap">
+                            {work.tags.map((tag) => (
+                              <span
+                                key={tag}
+                                className="font-['JetBrains_Mono'] text-[10px] px-2 py-0.5 rounded bg-[#f0eff4] text-[#525160]"
+                              >
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
 
-                  {/* Line 2 */}
-                  <line x1="0" y1="122" x2="72" y2="122" stroke="#c7c4d7" strokeWidth="1.2" />
-                  <polygon points="78,122 71,119 71,125" fill="#c7c4d7" />
+                        {/* Arrow Connector */}
+                        <div className="hidden sm:flex w-10 lg:w-14 items-center justify-center shrink-0">
+                          {isHighlighted ? (
+                            <div className="w-full flex items-center relative">
+                              <div className="h-[2px] w-full bg-[#712ae2]"></div>
+                              <div className="w-0 h-0 border-y-[4px] border-y-transparent border-l-[6px] border-l-[#712ae2] -ml-1"></div>
+                            </div>
+                          ) : (
+                            <div className="w-full flex items-center relative">
+                              <div className="h-[1.2px] w-full bg-[#c7c4d7]"></div>
+                              <div className="w-0 h-0 border-y-[3.5px] border-y-transparent border-l-[5px] border-l-[#c7c4d7] -ml-1"></div>
+                            </div>
+                          )}
+                        </div>
 
-                  {/* Line 3 (Solid Purple Highlight) */}
-                  <line x1="0" y1="200" x2="72" y2="200" stroke="#712ae2" strokeWidth="2" />
-                  <polygon points="78,200 70,196 70,204" fill="#712ae2" />
-
-                  {/* Line 4 */}
-                  <line x1="0" y1="278" x2="72" y2="278" stroke="#c7c4d7" strokeWidth="1.2" />
-                  <polygon points="78,278 71,275 71,281" fill="#c7c4d7" />
-
-                  {/* Line 5 */}
-                  <line x1="0" y1="356" x2="72" y2="356" stroke="#c7c4d7" strokeWidth="1.2" />
-                  <polygon points="78,356 71,353 71,359" fill="#c7c4d7" />
-                </svg>
-              </div>
-
-              {/* Column 3: Discovered Capabilities */}
-              <div className="lg:col-span-3 flex flex-col justify-between p-5 rounded-2xl bg-[#f8f7fa] border border-[#e3e2e6]/50">
-                <div>
-                  <div className="flex items-center justify-between mb-3.5">
-                    <div className="flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full bg-[#712ae2]"></span>
-                      <span className="font-['Plus_Jakarta_Sans'] text-[11px] uppercase tracking-wider text-[#712ae2] font-bold">
-                        DISCOVERED CAPABILITIES
-                      </span>
-                    </div>
-                    <span className="text-[#712ae2] text-[16px]">✦</span>
-                  </div>
-
-                  <div className="space-y-2.5 font-['Plus_Jakarta_Sans'] text-[13px]">
-                    {/* Capability 1 */}
-                    <div className="p-3 rounded-xl bg-white shadow-xs border border-[#e3e2e6]/70">
-                      <div className="flex items-center justify-between">
-                        <span className="font-semibold text-[#1b1b1f] text-[13px]">Technical Leadership</span>
-                        <span className="font-['JetBrains_Mono'] text-[12px] text-[#712ae2] font-bold">87%</span>
+                        {/* Discovered Capability Card */}
+                        <div className="w-full sm:w-64 lg:w-72 p-3 rounded-xl bg-white shadow-xs border border-[#e3e2e6]/70 flex flex-col justify-between shrink-0 min-h-[72px]">
+                          <div className="flex items-center justify-between">
+                            <span className="font-semibold text-[#1b1b1f] text-[13px]">{cap.name}</span>
+                            <span className="font-['JetBrains_Mono'] text-[12px] text-[#712ae2] font-bold">{cap.score}</span>
+                          </div>
+                          <div className="flex items-center gap-1.5 mt-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#712ae2]"></span>
+                            <span className="font-['Plus_Jakarta_Sans'] text-[10px] text-[#712ae2] uppercase tracking-wider font-bold">
+                              AI DISCOVERED
+                            </span>
+                          </div>
+                        </div>
                       </div>
-                      <div className="flex items-center gap-1.5 mt-1.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#712ae2]"></span>
-                        <span className="font-['Plus_Jakarta_Sans'] text-[10px] text-[#712ae2] uppercase tracking-wider font-bold">
-                          AI DISCOVERED
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Capability 2 */}
-                    <div className="p-3 rounded-xl bg-white shadow-xs border border-[#e3e2e6]/70">
-                      <div className="flex items-center justify-between">
-                        <span className="font-semibold text-[#1b1b1f] text-[13px]">Data Analysis & Pipeline Design</span>
-                        <span className="font-['JetBrains_Mono'] text-[12px] text-[#712ae2] font-bold">84%</span>
-                      </div>
-                      <div className="flex items-center gap-1.5 mt-1.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#712ae2]"></span>
-                        <span className="font-['Plus_Jakarta_Sans'] text-[10px] text-[#712ae2] uppercase tracking-wider font-bold">
-                          AI DISCOVERED
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Capability 3 */}
-                    <div className="p-3 rounded-xl bg-white shadow-xs border border-[#e3e2e6]/70">
-                      <div className="flex items-center justify-between">
-                        <span className="font-semibold text-[#1b1b1f] text-[13px]">Engineering Mentorship</span>
-                        <span className="font-['JetBrains_Mono'] text-[12px] text-[#712ae2] font-bold">91%</span>
-                      </div>
-                      <div className="flex items-center gap-1.5 mt-1.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#712ae2]"></span>
-                        <span className="font-['Plus_Jakarta_Sans'] text-[10px] text-[#712ae2] uppercase tracking-wider font-bold">
-                          AI DISCOVERED
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Capability 4 */}
-                    <div className="p-3 rounded-xl bg-white shadow-xs border border-[#e3e2e6]/70">
-                      <div className="flex items-center justify-between">
-                        <span className="font-semibold text-[#1b1b1f] text-[13px]">UX Systems Collaboration</span>
-                        <span className="font-['JetBrains_Mono'] text-[12px] text-[#712ae2] font-bold">81%</span>
-                      </div>
-                      <div className="flex items-center gap-1.5 mt-1.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#712ae2]"></span>
-                        <span className="font-['Plus_Jakarta_Sans'] text-[10px] text-[#712ae2] uppercase tracking-wider font-bold">
-                          AI DISCOVERED
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Capability 5 */}
-                    <div className="p-3 rounded-xl bg-white shadow-xs border border-[#e3e2e6]/70">
-                      <div className="flex items-center justify-between">
-                        <span className="font-semibold text-[#1b1b1f] text-[13px]">Distributed Problem Solving</span>
-                        <span className="font-['JetBrains_Mono'] text-[12px] text-[#712ae2] font-bold">95%</span>
-                      </div>
-                      <div className="flex items-center gap-1.5 mt-1.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#712ae2]"></span>
-                        <span className="font-['Plus_Jakarta_Sans'] text-[10px] text-[#712ae2] uppercase tracking-wider font-bold">
-                          AI DISCOVERED
-                        </span>
-                      </div>
-                    </div>
-                  </div>
+                    );
+                  })}
                 </div>
 
-                <div className="mt-4 pt-2 flex items-center justify-between font-['JetBrains_Mono'] text-[11px] text-[#777586] uppercase tracking-wider">
-                  <span>CONFIDENCE INDEX</span>
-                  <span className="text-[#1b1b1f] font-semibold">P &lt; 0.001</span>
+                {/* Sub-footers */}
+                <div className="flex items-center justify-between pt-3 mt-3 border-t border-[#e3e2e6]/40 text-[11px] font-['JetBrains_Mono'] text-[#777586]">
+                  <span>Continuous ingestion via GitHub, Linear & Slack</span>
+                  <div className="flex items-center gap-1.5 uppercase tracking-wider">
+                    <span>Confidence Index</span>
+                    <span className="text-[#1b1b1f] font-semibold">P &lt; 0.001</span>
+                  </div>
                 </div>
               </div>
             </div>

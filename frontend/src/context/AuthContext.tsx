@@ -35,15 +35,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         localStorage.removeItem('skillradar_user');
       }
     } else {
-      // Default to HR for instant hackathon exploration
-      const defaultPersona = DEMO_USERS.hr;
+      // Default to Arjun Kumar for premier talent discovery experience
+      const defaultPersona = DEMO_USERS.employee_arjun;
       setToken(defaultPersona.token);
       setUser(defaultPersona.user);
       localStorage.setItem('skillradar_token', defaultPersona.token);
       localStorage.setItem('skillradar_user', JSON.stringify(defaultPersona.user));
 
       // Silently exchange for real backend JWT if available
-      loginApi('hr.sarah@acme.com', 'hr123')
+      loginApi('arjun.mehta@acme.com', 'employee123')
         .then((resp) => {
           setToken(resp.access_token);
           setUser(resp.user);
@@ -56,6 +56,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
     setIsLoading(false);
   }, []);
+
 
   const login = async (email: string, pass: string) => {
     setIsLoading(true);

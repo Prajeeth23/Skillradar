@@ -57,27 +57,25 @@ export const TalentMatchingPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="max-w-6xl mx-auto px-4 sm:px-8 py-8 space-y-8 font-['Plus_Jakarta_Sans']">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2 text-xs font-bold text-indigo-400 uppercase tracking-wider mb-1">
-            <Sparkles className="w-4 h-4 text-amber-400" />
-            <span>AI Talent Matching Engine</span>
-          </div>
-          <h2 className="text-2xl font-bold text-white tracking-tight">
-            Discover Internal Talent Beyond Job Titles
-          </h2>
-          <p className="text-xs text-slate-400 mt-1">
-            Evaluate workforce profiles using the Divergence Engine to uncover non-obvious candidates with verified transferable skills.
-          </p>
+      <div>
+        <div className="inline-flex items-center gap-2 text-xs font-bold text-[#2a14b4] uppercase tracking-wider mb-2">
+          <Sparkles className="w-4 h-4 text-[#712ae2]" />
+          <span>AI Talent Matching Engine</span>
         </div>
+        <h1 className="text-3xl sm:text-4xl font-bold text-[#1b1b1f] tracking-tight">
+          Discover Internal Talent Beyond Job Titles
+        </h1>
+        <p className="text-sm text-[#525160] mt-1.5 max-w-2xl">
+          Evaluate workforce profiles using the Divergence Engine to uncover non-obvious candidates with verified transferable skills.
+        </p>
       </div>
 
       {/* Role Selection & Execution Banner */}
-      <div className="bg-[#111827] border border-slate-800 rounded-2xl p-6 shadow-md flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <div className="bg-white border border-[#e3e2e6]/80 rounded-2xl p-6 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div className="flex-1 max-w-xl">
-          <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+          <label className="block text-xs font-bold text-[#1b1b1f] mb-1.5 uppercase tracking-wider">
             Select Target Internal Opening:
           </label>
           <div className="flex items-center gap-3">
@@ -88,7 +86,7 @@ export const TalentMatchingPage: React.FC = () => {
                 setSearchParams({ role: e.target.value });
                 setHasSearched(false);
               }}
-              className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-white font-medium focus:outline-none focus:border-indigo-500"
+              className="w-full px-4 py-2.5 bg-[#f8f7fa] border border-[#e3e2e6] rounded-xl text-xs text-[#1b1b1f] font-semibold focus:outline-none focus:border-[#2a14b4]"
             >
               {roles.map((r) => (
                 <option key={r.id} value={r.id}>
@@ -99,8 +97,8 @@ export const TalentMatchingPage: React.FC = () => {
           </div>
 
           {selectedRole && (
-            <p className="text-xs text-slate-400 mt-2 line-clamp-2">
-              <span className="font-semibold text-slate-300">Mandate:</span> {selectedRole.description}
+            <p className="text-xs text-[#525160] mt-2 line-clamp-2">
+              <span className="font-semibold text-[#1b1b1f]">Mandate:</span> {selectedRole.description}
             </p>
           )}
         </div>
@@ -109,7 +107,7 @@ export const TalentMatchingPage: React.FC = () => {
         <button
           onClick={handleRunMatch}
           disabled={isAnalyzing || !selectedRoleId}
-          className="w-full md:w-auto px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold text-xs transition-all shadow-xl shadow-indigo-500/25 flex items-center justify-center gap-2.5 shrink-0"
+          className="w-full md:w-auto px-7 py-3.5 rounded-xl bg-[#2a14b4] hover:bg-[#3b23c9] text-white font-bold text-xs transition-all shadow-md shadow-indigo-950/15 flex items-center justify-center gap-2.5 shrink-0 cursor-pointer"
         >
           <Sparkles className="w-4 h-4 text-amber-300" />
           <span>{hasSearched ? 'Re-Run Matching' : 'Find Internal Talent ✨'}</span>
@@ -118,7 +116,7 @@ export const TalentMatchingPage: React.FC = () => {
 
       {/* AI Analysis Multi-Step Progress State */}
       {isAnalyzing && (
-        <div className="py-8">
+        <div className="py-8 bg-white border border-[#e3e2e6] rounded-2xl p-6 shadow-xs">
           <AIAnalysisLoader
             targetRoleTitle={selectedRole?.title || 'Selected Role'}
             onComplete={handleAnalysisFinished}
@@ -129,16 +127,16 @@ export const TalentMatchingPage: React.FC = () => {
       {/* Ranked Candidate Results */}
       {!isAnalyzing && hasSearched && (
         <div className="space-y-6">
-          <div className="flex items-center justify-between pb-2 border-b border-slate-800">
+          <div className="flex items-center justify-between pb-3 border-b border-[#e3e2e6]">
             <div>
-              <h3 className="text-lg font-bold text-white tracking-tight">
+              <h3 className="text-xl font-bold text-[#1b1b1f] tracking-tight">
                 Ranked Talent Matches ({matches.length})
               </h3>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-[#777586]">
                 Sorted by alignment score, including verified hidden and transferable capabilities.
               </p>
             </div>
-            <span className="text-xs text-emerald-400 font-semibold flex items-center gap-1.5">
+            <span className="text-xs text-[#16a34a] font-bold flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4" /> 10 Organization Profiles Evaluated
             </span>
           </div>
@@ -149,7 +147,7 @@ export const TalentMatchingPage: React.FC = () => {
                 key={candidate.employee_id}
                 candidate={candidate}
                 rank={idx + 1}
-                onViewProfile={(empId) => navigate(`/hr/employees/${empId}`)}
+                onViewProfile={() => navigate(`/why-arjun`)}
               />
             ))}
           </div>
@@ -158,12 +156,12 @@ export const TalentMatchingPage: React.FC = () => {
 
       {/* Initial Guidance Card (Before Search) */}
       {!isAnalyzing && !hasSearched && (
-        <div className="border border-dashed border-slate-800 bg-slate-900/30 rounded-2xl p-12 text-center max-w-xl mx-auto">
-          <div className="w-12 h-12 rounded-2xl bg-indigo-600/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center mx-auto mb-3">
+        <div className="border border-dashed border-[#e3e2e6] bg-[#f8f7fa] rounded-2xl p-12 text-center max-w-xl mx-auto">
+          <div className="w-12 h-12 rounded-2xl bg-[#f1edfd] text-[#712ae2] flex items-center justify-center mx-auto mb-3">
             <Sparkles className="w-6 h-6" />
           </div>
-          <h3 className="text-base font-bold text-white">Ready to Scan Internal Talent</h3>
-          <p className="text-xs text-slate-400 mt-1 max-w-sm mx-auto leading-relaxed">
+          <h3 className="text-base font-bold text-[#1b1b1f]">Ready to Scan Internal Talent</h3>
+          <p className="text-xs text-[#525160] mt-1.5 max-w-sm mx-auto leading-relaxed">
             Click "Find Internal Talent" to activate the Divergence Engine across candidate work activities, generating match scores and explainable rationales.
           </p>
         </div>
