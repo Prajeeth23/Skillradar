@@ -1,0 +1,66 @@
+import { InternalRole } from '../types/role';
+
+export const MOCK_INTERNAL_ROLES: InternalRole[] = [
+  {
+    id: 'role-fintech-01',
+    organization_id: 'org-acme-01',
+    title: 'Product Engineer (Fintech)',
+    department: 'Engineering',
+    description: 'Bridge the gap between backend transaction systems and end-user customer experience in our payment product squad.',
+    requirements: 'Strong Python API expertise combined with user empathy and cross-functional UX collaboration skills.',
+    status: 'OPEN',
+    created_at: '2026-02-15T09:00:00Z',
+    skills: [
+      { id: 'rs-1', skill_id: 'sk-1', skill_name: 'Python', category: 'Technical', required_level: 4, importance: 'MANDATORY' },
+      { id: 'rs-2', skill_id: 'sk-3', skill_name: 'REST APIs', category: 'Technical', required_level: 4, importance: 'MANDATORY' },
+      { id: 'rs-3', skill_id: 'sk-10', skill_name: 'UX Collaboration', category: 'Interpersonal', required_level: 3, importance: 'PREFERRED' },
+      { id: 'rs-4', skill_id: 'sk-2', skill_name: 'PostgreSQL', category: 'Technical', required_level: 3, importance: 'PREFERRED' },
+    ],
+  },
+  {
+    id: 'role-devops-02',
+    organization_id: 'org-acme-01',
+    title: 'Platform / DevOps Engineer',
+    department: 'Infrastructure',
+    description: 'Design and maintain high-reliability CI/CD deployment pipelines, container clusters, and developer tooling.',
+    requirements: 'Hands-on experience with automated pipelines, Linux, Python scripting, and containerized architectures.',
+    status: 'OPEN',
+    created_at: '2026-02-18T11:30:00Z',
+    skills: [
+      { id: 'rs-5', skill_id: 'sk-6', skill_name: 'CI/CD Pipelines', category: 'Technical', required_level: 4, importance: 'MANDATORY' },
+      { id: 'rs-6', skill_id: 'sk-5', skill_name: 'Docker & Containerization', category: 'Technical', required_level: 4, importance: 'MANDATORY' },
+      { id: 'rs-7', skill_id: 'sk-1', skill_name: 'Python', category: 'Technical', required_level: 3, importance: 'PREFERRED' },
+      { id: 'rs-8', skill_id: 'sk-12', skill_name: 'Production Incident Triage', category: 'Technical', required_level: 3, importance: 'PREFERRED' },
+    ],
+  },
+  {
+    id: 'role-analyst-03',
+    organization_id: 'org-acme-01',
+    title: 'Growth & Product Analyst',
+    department: 'Product',
+    description: 'Drive user retention and product conversion by discovering insights in behavioral data and presenting to leadership.',
+    requirements: 'Mastery of SQL analytics, retention cohort modeling, and visual dashboard storytelling.',
+    status: 'OPEN',
+    created_at: '2026-02-20T14:00:00Z',
+    skills: [
+      { id: 'rs-9', skill_id: 'sk-9', skill_name: 'SQL Analytics', category: 'Technical', required_level: 4, importance: 'MANDATORY' },
+      { id: 'rs-10', skill_id: 'sk-13', skill_name: 'Data Storytelling', category: 'Domain', required_level: 4, importance: 'MANDATORY' },
+      { id: 'rs-11', skill_id: 'sk-14', skill_name: 'Customer Churn Analysis', category: 'Domain', required_level: 3, importance: 'PREFERRED' },
+    ],
+  },
+  {
+    id: 'role-support-04',
+    organization_id: 'org-acme-01',
+    title: 'Technical Support Engineer L3',
+    department: 'Customer Operations',
+    description: 'Handle complex customer escalations, replicate production anomalies, query backend databases, and author runbooks.',
+    requirements: 'Strong technical debugging, SQL querying, production triage, and clear developer documentation skills.',
+    status: 'OPEN',
+    created_at: '2026-02-25T16:15:00Z',
+    skills: [
+      { id: 'rs-12', skill_id: 'sk-9', skill_name: 'SQL Analytics', category: 'Technical', required_level: 3, importance: 'MANDATORY' },
+      { id: 'rs-13', skill_id: 'sk-12', skill_name: 'Production Incident Triage', category: 'Technical', required_level: 3, importance: 'MANDATORY' },
+      { id: 'rs-14', skill_id: 'sk-15', skill_name: 'Technical Documentation', category: 'Domain', required_level: 3, importance: 'PREFERRED' },
+    ],
+  },
+];

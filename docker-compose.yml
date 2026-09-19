@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: skillradar_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespassword
+      POSTGRES_DB: skillradar
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./backend
+    container_name: skillradar_api
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://postgres:postgrespassword@db:5432/skillradar
+      JWT_SECRET: skillradar-super-secret-jwt-key-hackathon-2026-beyond-titles
+      GROQ_API_KEY: ${GROQ_API_KEY:-}
+      GROQ_MODEL: llama-3.3-70b-versatile
+    ports:
+      - "8000:8000"
+    command: >
+      sh -c "python -m app.db.seed && uvicorn app.main:app --host 0.0.0.0 --port 8000"
+
+volumes:
+  postgres_data:
