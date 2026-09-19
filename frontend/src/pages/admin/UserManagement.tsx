@@ -106,14 +106,14 @@ export const UserManagement: React.FC = () => {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-white tracking-tight">User Account Governance</h2>
-          <p className="text-xs text-slate-400 mt-1">
+          <h2 className="text-2xl font-bold text-[#1A1A1E] tracking-tight font-['Plus_Jakarta_Sans']">User Account Governance</h2>
+          <p className="text-xs text-[#6B6B76] mt-1">
             Manage administrative access, HR credentials, and employee platform accounts.
           </p>
         </div>
         <button
           onClick={() => setShowModal(true)}
-          className="px-4 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-500 rounded-xl transition-all shadow-md shadow-indigo-600/20 flex items-center gap-2"
+          className="px-4 py-2 text-xs font-semibold text-white bg-[#5B4FE8] hover:bg-[#4A3FD1] rounded-xl transition-all shadow-xs flex items-center gap-2 cursor-pointer"
         >
           <Plus className="w-4 h-4" />
           <span>Provision New User</span>
@@ -122,21 +122,21 @@ export const UserManagement: React.FC = () => {
 
       {/* Search */}
       <div className="relative max-w-sm">
-        <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+        <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#9B9BA5]" />
         <input
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Filter users by name or email..."
-          className="w-full pl-10 pr-4 py-2 bg-[#111827] border border-slate-800 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500"
+          className="w-full pl-10 pr-4 py-2 bg-[#FFFFFF] border border-[#E5E5EA] rounded-xl text-xs text-[#1A1A1E] placeholder-[#9B9BA5] focus:outline-none focus:border-[#5B4FE8] shadow-xs"
         />
       </div>
 
       {/* Users Table */}
-      <div className="bg-[#111827] border border-slate-800 rounded-2xl overflow-hidden shadow-md">
+      <div className="bg-[#FFFFFF] border border-[#E5E5EA] rounded-2xl overflow-hidden shadow-xs">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-slate-900 text-slate-400 border-b border-slate-800 uppercase font-semibold text-[10px] tracking-wider">
+            <thead className="bg-[#F1F1F4] text-[#9B9BA5] border-b border-[#E5E5EA] uppercase font-semibold text-[10px] tracking-wider font-mono">
               <tr>
                 <th className="py-3.5 px-5">Name</th>
                 <th className="py-3.5 px-4">Email</th>
@@ -147,11 +147,11 @@ export const UserManagement: React.FC = () => {
                 <th className="py-3.5 px-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60">
+            <tbody className="divide-y divide-[#E5E5EA]">
               {filteredUsers.map((u) => (
-                <tr key={u.id} className="hover:bg-slate-800/40 transition-colors">
-                  <td className="py-3.5 px-5 font-semibold text-white">{u.name}</td>
-                  <td className="py-3.5 px-4 text-slate-300 font-mono text-[11px]">{u.email}</td>
+                <tr key={u.id} className="hover:bg-[#F1F1F4]/70 transition-colors">
+                  <td className="py-3.5 px-5 font-semibold text-[#1A1A1E] font-['Plus_Jakarta_Sans']">{u.name}</td>
+                  <td className="py-3.5 px-4 text-[#6B6B76] font-mono text-[11px]">{u.email}</td>
                   <td className="py-3.5 px-4">
                     <Badge
                       variant={
@@ -165,20 +165,20 @@ export const UserManagement: React.FC = () => {
                       {u.role}
                     </Badge>
                   </td>
-                  <td className="py-3.5 px-4 text-slate-400">{u.organization}</td>
+                  <td className="py-3.5 px-4 text-[#6B6B76]">{u.organization}</td>
                   <td className="py-3.5 px-4">
                     <Badge variant={u.status === 'ACTIVE' ? 'success' : 'danger'}>
                       {u.status}
                     </Badge>
                   </td>
-                  <td className="py-3.5 px-4 text-slate-400">{u.createdAt}</td>
+                  <td className="py-3.5 px-4 text-[#9B9BA5] font-mono">{u.createdAt}</td>
                   <td className="py-3.5 px-4 text-right">
                     <button
                       onClick={() => toggleStatus(u.id)}
-                      className={`px-2.5 py-1 rounded text-[11px] font-medium transition-colors ${
+                      className={`px-2.5 py-1 rounded text-[11px] font-medium transition-colors cursor-pointer ${
                         u.status === 'ACTIVE'
-                          ? 'text-rose-400 hover:bg-rose-500/10'
-                          : 'text-emerald-400 hover:bg-emerald-500/10'
+                          ? 'text-rose-600 hover:bg-rose-50'
+                          : 'text-[#16a34a] hover:bg-emerald-50'
                       }`}
                     >
                       {u.status === 'ACTIVE' ? 'Deactivate' : 'Activate'}
@@ -193,42 +193,42 @@ export const UserManagement: React.FC = () => {
 
       {/* Provision User Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-[#111827] border border-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl">
-            <h3 className="text-lg font-bold text-white mb-1">Provision Platform Account</h3>
-            <p className="text-xs text-slate-400 mb-4">Create a new HR or Employee profile.</p>
+        <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-[#FFFFFF] border border-[#E5E5EA] rounded-2xl max-w-md w-full p-6 shadow-2xl">
+            <h3 className="text-lg font-bold text-[#1A1A1E] mb-1 font-['Plus_Jakarta_Sans']">Provision Platform Account</h3>
+            <p className="text-xs text-[#6B6B76] mb-4">Create a new HR or Employee profile.</p>
 
             <form onSubmit={handleCreate} className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">Full Name</label>
+                <label className="block text-xs font-semibold text-[#1A1A1E] mb-1">Full Name</label>
                 <input
                   type="text"
                   required
                   value={newName}
                   onChange={(e) => setNewName(e.target.value)}
                   placeholder="e.g. Liam Smith"
-                  className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-indigo-500"
+                  className="w-full px-3 py-2 bg-[#F1F1F4] border border-[#E5E5EA] rounded-xl text-xs text-[#1A1A1E] focus:outline-none focus:border-[#5B4FE8]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">Email</label>
+                <label className="block text-xs font-semibold text-[#1A1A1E] mb-1">Email</label>
                 <input
                   type="email"
                   required
                   value={newEmail}
                   onChange={(e) => setNewEmail(e.target.value)}
                   placeholder="e.g. liam.smith@acme.com"
-                  className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-indigo-500"
+                  className="w-full px-3 py-2 bg-[#F1F1F4] border border-[#E5E5EA] rounded-xl text-xs text-[#1A1A1E] focus:outline-none focus:border-[#5B4FE8]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">RBAC Role</label>
+                <label className="block text-xs font-semibold text-[#1A1A1E] mb-1">RBAC Role</label>
                 <select
                   value={newRole}
                   onChange={(e) => setNewRole(e.target.value as any)}
-                  className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-indigo-500"
+                  className="w-full px-3 py-2 bg-[#F1F1F4] border border-[#E5E5EA] rounded-xl text-xs text-[#1A1A1E] focus:outline-none focus:border-[#5B4FE8]"
                 >
                   <option value="EMPLOYEE">EMPLOYEE</option>
                   <option value="HR">HR</option>
@@ -239,13 +239,13 @@ export const UserManagement: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="px-4 py-2 text-xs font-medium text-slate-400 hover:text-white"
+                  className="px-4 py-2 text-xs font-medium text-[#6B6B76] hover:text-[#1A1A1E] cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-500 rounded-xl transition-all shadow-sm"
+                  className="px-4 py-2 text-xs font-semibold text-white bg-[#5B4FE8] hover:bg-[#4A3FD1] rounded-xl transition-all shadow-xs cursor-pointer"
                 >
                   Create User
                 </button>

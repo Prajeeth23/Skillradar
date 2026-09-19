@@ -30,17 +30,17 @@ export const HRDashboard: React.FC = () => {
       {/* Welcome Banner */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-white tracking-tight">Talent Intelligence Dashboard</h2>
-          <p className="text-xs text-slate-400 mt-1">
+          <h2 className="text-2xl font-bold text-[#1A1A1E] tracking-tight font-['Plus_Jakarta_Sans']">Talent Intelligence Dashboard</h2>
+          <p className="text-xs text-[#6B6B76] mt-1">
             Real-time workforce capability discovery and internal mobility matching.
           </p>
         </div>
         <div className="flex items-center gap-2">
           <button
-            onClick={() => navigate('/hr/discovery')}
-            className="px-4 py-2 text-xs font-semibold text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 rounded-xl transition-all shadow-md shadow-indigo-500/20 flex items-center gap-2"
+            onClick={() => navigate('/talent-radar')}
+            className="px-4 py-2 text-xs font-semibold text-white bg-[#5B4FE8] hover:bg-[#4A3FD1] rounded-xl transition-all shadow-xs flex items-center gap-2 cursor-pointer"
           >
-            <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+            <Sparkles className="w-3.5 h-3.5 text-white" />
             <span>Find Internal Talent</span>
           </button>
         </div>
@@ -85,15 +85,15 @@ export const HRDashboard: React.FC = () => {
       {/* Main Grid: Workforce Skills + AI Talent Alerts */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Left: Workforce Skills Distribution */}
-        <div className="lg:col-span-2 bg-[#111827] border border-slate-800 rounded-2xl p-6 shadow-md">
-          <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-800">
+        <div className="lg:col-span-2 bg-[#FFFFFF] border border-[#E5E5EA] rounded-2xl p-6 shadow-xs">
+          <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#E5E5EA]">
             <div>
-              <h3 className="text-base font-bold text-white">Workforce Skills Inventory</h3>
-              <p className="text-xs text-slate-400 mt-0.5">
+              <h3 className="text-base font-bold text-[#1A1A1E] font-['Plus_Jakarta_Sans']">Workforce Skills Inventory</h3>
+              <p className="text-xs text-[#6B6B76] mt-0.5">
                 Distribution of verified explicit and AI-discovered transferable skills.
               </p>
             </div>
-            <span className="text-xs text-indigo-400 font-medium cursor-pointer hover:underline" onClick={() => navigate('/hr/employees')}>
+            <span className="text-xs text-[#5B4FE8] font-semibold cursor-pointer hover:underline" onClick={() => navigate('/hr/employees')}>
               View Directory →
             </span>
           </div>
@@ -103,18 +103,18 @@ export const HRDashboard: React.FC = () => {
               <div key={s.name} className="space-y-1.5">
                 <div className="flex items-center justify-between text-xs">
                   <div className="flex items-center gap-2">
-                    <span className="font-semibold text-slate-200">{s.name}</span>
+                    <span className="font-semibold text-[#1A1A1E]">{s.name}</span>
                     {s.isHidden && (
-                      <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                      <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-[#5B4FE8]/10 text-[#5B4FE8] border border-[#5B4FE8]/20 font-mono">
                         ✨ Hidden Talent
                       </span>
                     )}
                   </div>
-                  <span className="text-slate-400 tabular-nums font-medium">
+                  <span className="text-[#6B6B76] tabular-nums font-medium font-mono text-[11px]">
                     {s.count} practitioners ({s.pct}%)
                   </span>
                 </div>
-                <div className="h-2 w-full bg-slate-800 rounded-full overflow-hidden">
+                <div className="h-2 w-full bg-[#ECECF0] rounded-full overflow-hidden">
                   <div
                     className={`h-full rounded-full transition-all duration-500 ${s.color}`}
                     style={{ width: `${s.pct}%` }}
@@ -128,31 +128,31 @@ export const HRDashboard: React.FC = () => {
         {/* Right: AI Talent Alerts */}
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-base font-bold text-white">AI Talent Alerts</h3>
-            <span className="text-xs font-semibold text-purple-400 flex items-center gap-1">
-              <Sparkles className="w-3 h-3" /> Live
+            <h3 className="text-base font-bold text-[#1A1A1E] font-['Plus_Jakarta_Sans']">AI Talent Alerts</h3>
+            <span className="text-xs font-semibold text-[#5B4FE8] flex items-center gap-1 font-mono">
+              <Sparkles className="w-3 h-3 text-[#5B4FE8]" /> Live
             </span>
           </div>
 
           {/* Alert Card 1: New Talent Match */}
-          <div className="p-5 rounded-2xl bg-gradient-to-br from-indigo-950/40 to-slate-900 border border-indigo-500/30 shadow-sm relative group">
+          <div className="p-5 rounded-2xl bg-[#FFFFFF] border border-[#E5E5EA] hover:border-[#5B4FE8]/40 shadow-xs relative group transition-all">
             <div className="flex items-center gap-2 mb-2">
-              <span className="w-2 h-2 rounded-full bg-indigo-400 animate-ping" />
+              <span className="w-2 h-2 rounded-full bg-[#5B4FE8]" />
               <Badge variant="primary" size="sm">
                 New Talent Match
               </Badge>
-              <span className="text-[10px] text-slate-400 ml-auto">10m ago</span>
+              <span className="text-[10px] text-[#9B9BA5] ml-auto font-mono">10m ago</span>
             </div>
-            <h4 className="text-sm font-bold text-white">
+            <h4 className="text-sm font-bold text-[#1A1A1E] font-['Plus_Jakarta_Sans']">
               3 employees match the newly created Product Engineer (Fintech) opening.
             </h4>
-            <p className="text-xs text-slate-300 mt-2 leading-relaxed">
-              Top candidate Marcus Vance (Backend Dev) demonstrated transferable UX collaboration, yielding an 86.5% match.
+            <p className="text-xs text-[#6B6B76] mt-2 leading-relaxed">
+              Top candidate Arjun Kumar (Backend Dev) demonstrated transferable UX collaboration and technical mentorship, yielding an 86.5% match.
             </p>
-            <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between">
+            <div className="mt-4 pt-3 border-t border-[#E5E5EA] flex items-center justify-between">
               <button
-                onClick={() => navigate('/hr/discovery')}
-                className="text-xs font-semibold text-indigo-400 hover:text-indigo-300 flex items-center gap-1 transition-colors"
+                onClick={() => navigate('/talent-radar')}
+                className="text-xs font-semibold text-[#5B4FE8] hover:text-[#4A3FD1] flex items-center gap-1 transition-colors cursor-pointer"
               >
                 <span>View Candidate Matches</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -161,24 +161,24 @@ export const HRDashboard: React.FC = () => {
           </div>
 
           {/* Alert Card 2: Hidden Skill Discovered */}
-          <div className="p-5 rounded-2xl bg-gradient-to-br from-purple-950/40 to-slate-900 border border-purple-500/30 shadow-sm relative group">
+          <div className="p-5 rounded-2xl bg-[#FFFFFF] border border-[#E5E5EA] hover:border-[#5B4FE8]/40 shadow-xs relative group transition-all">
             <div className="flex items-center gap-2 mb-2">
-              <span className="w-2 h-2 rounded-full bg-purple-400" />
+              <span className="w-2 h-2 rounded-full bg-[#712AE2]" />
               <Badge variant="purple" size="sm">
                 Hidden Skill Discovered
               </Badge>
-              <span className="text-[10px] text-slate-400 ml-auto">1h ago</span>
+              <span className="text-[10px] text-[#9B9BA5] ml-auto font-mono">1h ago</span>
             </div>
-            <h4 className="text-sm font-bold text-white">
-              Divergence Engine detected CI/CD and DevOps in QA Engineer Elena Rostova.
+            <h4 className="text-sm font-bold text-[#1A1A1E] font-['Plus_Jakarta_Sans']">
+              Synthesis Engine detected CI/CD and DevOps in QA Engineer Elena Rostova.
             </h4>
-            <p className="text-xs text-slate-300 mt-2 leading-relaxed">
-              Verified by GitHub Actions standard workflow project deliverables.
+            <p className="text-xs text-[#6B6B76] mt-2 leading-relaxed">
+              Verified by GitHub Actions standard workflow telemetry and test automation scripts.
             </p>
-            <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between">
+            <div className="mt-4 pt-3 border-t border-[#E5E5EA] flex items-center justify-between">
               <button
                 onClick={() => navigate('/hr/employees/emp-1002')}
-                className="text-xs font-semibold text-purple-400 hover:text-purple-300 flex items-center gap-1 transition-colors"
+                className="text-xs font-semibold text-[#5B4FE8] hover:text-[#4A3FD1] flex items-center gap-1 transition-colors cursor-pointer"
               >
                 <span>Inspect Employee Dossier</span>
                 <ArrowRight className="w-3.5 h-3.5" />

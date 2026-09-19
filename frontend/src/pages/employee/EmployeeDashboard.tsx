@@ -49,14 +49,14 @@ export const EmployeeDashboard: React.FC = () => {
     <div className="space-y-8">
       {/* Welcome Header */}
       <div>
-        <div className="flex items-center gap-2 text-xs font-semibold text-indigo-400 uppercase tracking-wider mb-1">
-          <Sparkles className="w-4 h-4 text-amber-400" />
+        <div className="flex items-center gap-2 text-xs font-semibold text-[#5B4FE8] uppercase tracking-wider mb-1 font-mono">
+          <Sparkles className="w-4 h-4 text-[#5B4FE8]" />
           <span>Personal Career Intelligence</span>
         </div>
-        <h2 className="text-2xl font-bold text-white tracking-tight">
+        <h2 className="text-2xl font-bold text-[#1A1A1E] tracking-tight font-['Plus_Jakarta_Sans']">
           Good morning, {user?.name || 'Arun'}
         </h2>
-        <p className="text-xs text-slate-400 mt-1">
+        <p className="text-xs text-[#6B6B76] mt-1">
           Your SkillRadar talent profile is active with verified and AI-discovered transferable skills.
         </p>
       </div>
@@ -100,15 +100,15 @@ export const EmployeeDashboard: React.FC = () => {
       {/* Main Grid: My Skill Profile vs Recommended Opportunities */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Left: My Skill Profile */}
-        <div className="bg-[#111827] border border-slate-800 rounded-2xl p-6 shadow-md space-y-5">
-          <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+        <div className="bg-[#FFFFFF] border border-[#E5E5EA] rounded-2xl p-6 shadow-xs space-y-5">
+          <div className="flex items-center justify-between pb-3 border-b border-[#E5E5EA]">
             <div>
-              <h3 className="text-base font-bold text-white">My Skill Profile</h3>
-              <p className="text-xs text-slate-400">Core proficiencies & discovered capabilities</p>
+              <h3 className="text-base font-bold text-[#1A1A1E] font-['Plus_Jakarta_Sans']">My Skill Profile</h3>
+              <p className="text-xs text-[#6B6B76]">Core proficiencies & discovered capabilities</p>
             </div>
             <button
               onClick={() => navigate('/employee/skills')}
-              className="text-xs text-indigo-400 hover:text-indigo-300 font-medium"
+              className="text-xs text-[#5B4FE8] hover:text-[#4A3FD1] font-semibold"
             >
               View All →
             </button>
@@ -126,10 +126,10 @@ export const EmployeeDashboard: React.FC = () => {
             ))}
           </div>
 
-          <div className="p-3.5 rounded-xl bg-purple-950/20 border border-purple-500/25 text-xs text-slate-300 flex items-start gap-2.5">
-            <span className="text-amber-400 text-sm shrink-0">✨</span>
+          <div className="p-3.5 rounded-xl bg-[#F4F3FF] border border-[#5B4FE8]/25 text-xs text-[#4B4B55] flex items-start gap-2.5">
+            <span className="text-[#5B4FE8] text-sm shrink-0">✨</span>
             <p className="leading-relaxed">
-              <span className="font-semibold text-white">Transferable strengths:</span> Your recent checkout redesign and mentorship work unlocked high-confidence abilities in UX collaboration and technical leadership.
+              <span className="font-semibold text-[#1A1A1E]">Transferable strengths:</span> Your recent checkout redesign and mentorship work unlocked high-confidence abilities in UX collaboration and technical leadership.
             </p>
           </div>
         </div>
@@ -138,12 +138,12 @@ export const EmployeeDashboard: React.FC = () => {
         <div className="lg:col-span-2 space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-base font-bold text-white">Recommended Opportunities</h3>
-              <p className="text-xs text-slate-400">Internal roles tailored to your demonstrated talents</p>
+              <h3 className="text-base font-bold text-[#1A1A1E] font-['Plus_Jakarta_Sans']">Recommended Opportunities</h3>
+              <p className="text-xs text-[#6B6B76]">Internal roles tailored to your demonstrated talents</p>
             </div>
             <button
               onClick={() => navigate('/employee/opportunities')}
-              className="text-xs text-indigo-400 hover:text-indigo-300 font-medium"
+              className="text-xs text-[#5B4FE8] hover:text-[#4A3FD1] font-semibold"
             >
               Explore All →
             </button>
@@ -153,40 +153,40 @@ export const EmployeeDashboard: React.FC = () => {
             {recommendations.slice(0, 2).map((rec) => (
               <div
                 key={rec.role_id}
-                className="bg-[#111827] border border-slate-800 rounded-2xl p-5 hover:border-slate-700/80 transition-all shadow-md"
+                className="bg-[#FFFFFF] border border-[#E5E5EA] rounded-2xl p-5 hover:border-[#5B4FE8]/40 hover:shadow-xs transition-all"
               >
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <div className="flex items-center gap-2">
-                      <h4 className="text-base font-bold text-white">{rec.role_title}</h4>
+                      <h4 className="text-base font-bold text-[#1A1A1E] font-['Plus_Jakarta_Sans']">{rec.role_title}</h4>
                       <Badge variant={rec.match_score >= 85 ? 'success' : 'primary'} size="sm">
                         {rec.match_score >= 85 ? 'Exceptional Match' : 'Strong Match'}
                       </Badge>
                     </div>
-                    <p className="text-xs text-slate-400 mt-0.5">{rec.department} Department</p>
+                    <p className="text-xs text-[#6B6B76] mt-0.5">{rec.department} Department</p>
                   </div>
                   <div className="text-right">
-                    <div className="text-2xl font-extrabold text-indigo-400 tabular-nums">
+                    <div className="text-2xl font-extrabold text-[#5B4FE8] tabular-nums font-['Plus_Jakarta_Sans']">
                       {rec.match_score.toFixed(1)}%
                     </div>
-                    <div className="text-[10px] text-slate-400 uppercase font-semibold">Match Score</div>
+                    <div className="text-[10px] text-[#9B9BA5] uppercase font-semibold font-mono">Match Score</div>
                   </div>
                 </div>
 
                 {/* Why Matched Snippet */}
-                <div className="mt-3.5 p-3 rounded-xl bg-slate-900/80 border border-slate-800 text-xs text-slate-300 leading-relaxed">
-                  <span className="font-semibold text-indigo-300 mr-1.5">Why you match:</span>
+                <div className="mt-3.5 p-3 rounded-xl bg-[#F4F3FF] border border-[#5B4FE8]/20 text-xs text-[#4B4B55] leading-relaxed">
+                  <span className="font-semibold text-[#5B4FE8] mr-1.5">Why you match:</span>
                   {rec.explanation}
                 </div>
 
-                <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs">
-                  <div className="flex items-center gap-1.5 text-slate-400">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                    <span>{rec.matching_skills.slice(0, 2).join(', ')}</span>
+                <div className="mt-4 pt-3 border-t border-[#E5E5EA] flex items-center justify-between text-xs">
+                  <div className="flex items-center gap-1.5 text-[#6B6B76]">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-[#22C55E]" />
+                    <span className="font-mono text-[11px]">{rec.matching_skills.slice(0, 2).join(', ')}</span>
                   </div>
                   <button
                     onClick={() => navigate(`/employee/skill-gap?role=${rec.role_id}`)}
-                    className="font-semibold text-indigo-400 hover:text-indigo-300 flex items-center gap-1"
+                    className="font-semibold text-[#5B4FE8] hover:text-[#4A3FD1] flex items-center gap-1"
                   >
                     <span>Analyze Skill Gap</span>
                     <ArrowRight className="w-3.5 h-3.5" />

@@ -40,25 +40,24 @@ export const LearningRecCard: React.FC<LearningRecCardProps> = ({
   };
 
   return (
-    <div className="bg-slate-900/70 border border-slate-800 rounded-xl p-4 hover:border-slate-700/80 transition-all flex flex-col justify-between">
+    <div className="bg-[#FFFFFF] border border-[#E5E5EA] rounded-xl p-4 hover:border-[#5B4FE8]/40 shadow-xs hover:shadow-sm transition-all flex flex-col justify-between">
       <div>
         <div className="flex items-center justify-between gap-2 mb-2">
-          <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-300">
+          <div className="flex items-center gap-1.5 text-xs font-semibold text-[#1A1A1E]">
             {getResourceIcon()}
-            <span>{resourceType}</span>
+            <span className="font-mono text-[11px]">{resourceType}</span>
           </div>
           <Badge variant={getPriorityVariant()} size="sm">
             {priority} Priority
           </Badge>
         </div>
-        <h5 className="text-sm font-bold text-white mb-1 leading-snug">{title}</h5>
-        <p className="text-xs text-slate-400 leading-relaxed">{description}</p>
+        <h5 className="text-sm font-bold text-[#1A1A1E] mb-1 leading-snug font-['Plus_Jakarta_Sans']">{title}</h5>
+        <p className="text-xs text-[#6B6B76] leading-relaxed">{description}</p>
       </div>
-      <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-[11px]">
-        <span className="text-indigo-400 font-medium hover:underline cursor-pointer">
+      <div className="mt-4 pt-3 border-t border-[#E5E5EA] flex items-center justify-between text-[11px]">
+        <span className="text-[#5B4FE8] font-semibold hover:underline cursor-pointer">
           Start Learning Track →
         </span>
-        <span className="text-slate-500">Internal Academy</span>
       </div>
     </div>
   );

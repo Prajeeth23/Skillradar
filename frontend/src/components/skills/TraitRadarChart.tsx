@@ -31,34 +31,32 @@ export const TraitRadarChart: React.FC<TraitRadarChartProps> = ({
 }) => {
   if (!data || data.length === 0) {
     return (
-      <div className={`p-6 bg-slate-900/60 border border-slate-800 rounded-2xl text-center ${className}`}>
-        <p className="text-sm text-slate-400">No psychometric assessment data recorded yet.</p>
+      <div className={`p-6 bg-[#FFFFFF] border border-[#E5E5EA] rounded-2xl text-center ${className}`}>
+        <p className="text-sm text-[#6B6B76]">No psychometric assessment data recorded yet.</p>
       </div>
     );
   }
 
   return (
     <div
-      className={`bg-gradient-to-b from-slate-900/90 to-slate-950/90 border border-slate-800/80 rounded-2xl p-6 shadow-xl backdrop-blur-md relative overflow-hidden ${className}`}
+      className={`bg-[#FFFFFF] border border-[#E5E5EA] rounded-2xl p-6 shadow-xs relative overflow-hidden ${className}`}
     >
-      <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/5 rounded-full blur-3xl pointer-events-none" />
-
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2.5">
-          <div className="p-2 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400">
+          <div className="p-2 rounded-xl bg-[#5B4FE8]/10 border border-[#5B4FE8]/20 text-[#5B4FE8]">
             <Sparkles className="w-5 h-5" />
           </div>
           <div>
-            <h3 className="text-base font-semibold text-white tracking-tight">
+            <h3 className="text-base font-bold text-[#1A1A1E] tracking-tight font-['Plus_Jakarta_Sans']">
               Behavioral Psychometric Profile
             </h3>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-[#6B6B76]">
               Evaluated across 4 core cognitive and situational dimensions
             </p>
           </div>
         </div>
-        <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+        <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-[#22C55E]/10 text-[#16a34a] border border-[#22C55E]/20">
           Verified Results
         </span>
       </div>
@@ -67,33 +65,33 @@ export const TraitRadarChart: React.FC<TraitRadarChartProps> = ({
       <div className="h-64 w-full my-2">
         <ResponsiveContainer width="100%" height="100%">
           <RadarChart cx="50%" cy="50%" outerRadius="75%" data={data}>
-            <PolarGrid stroke="#334155" strokeDasharray="3 3" />
+            <PolarGrid stroke="#E5E5EA" strokeDasharray="3 3" />
             <PolarAngleAxis
               dataKey="trait"
-              tick={{ fill: '#94a3b8', fontSize: 12, fontWeight: 500 }}
+              tick={{ fill: '#4B4B55', fontSize: 12, fontWeight: 500 }}
             />
             <PolarRadiusAxis
               angle={30}
               domain={[0, 100]}
-              tick={{ fill: '#64748b', fontSize: 10 }}
-              stroke="#1e293b"
+              tick={{ fill: '#9B9BA5', fontSize: 10 }}
+              stroke="#E5E5EA"
             />
             <Radar
               name="Proficiency Score"
               dataKey="score"
-              stroke="#6366f1"
+              stroke="#5B4FE8"
               strokeWidth={2}
-              fill="#6366f1"
-              fillOpacity={0.4}
+              fill="#5B4FE8"
+              fillOpacity={0.25}
             />
             <Tooltip
               content={({ active, payload }) => {
                 if (active && payload && payload.length) {
                   const item = payload[0].payload as RadarDataPoint;
                   return (
-                    <div className="bg-slate-900 border border-slate-700 p-2.5 rounded-xl shadow-lg text-xs">
-                      <p className="font-semibold text-slate-200">{item.trait}</p>
-                      <p className="text-indigo-400 font-bold mt-0.5">
+                    <div className="bg-[#FFFFFF] border border-[#E5E5EA] p-2.5 rounded-xl shadow-lg text-xs">
+                      <p className="font-semibold text-[#1A1A1E]">{item.trait}</p>
+                      <p className="text-[#5B4FE8] font-bold mt-0.5 font-mono">
                         Score: {item.score}%
                       </p>
                     </div>
@@ -111,28 +109,26 @@ export const TraitRadarChart: React.FC<TraitRadarChartProps> = ({
         {data.map((item) => (
           <div
             key={item.trait}
-            className="p-3 bg-slate-950/60 border border-slate-800/80 rounded-xl flex items-center justify-between"
+            className="p-3 bg-[#F1F1F4] border border-[#E5E5EA] rounded-xl flex items-center justify-between"
           >
             <div className="flex items-center gap-2">
-              {TRAIT_ICONS[item.trait] || <Sparkles className="w-4 h-4 text-slate-400" />}
-              <span className="text-xs font-medium text-slate-300">
+              {TRAIT_ICONS[item.trait] || <Sparkles className="w-4 h-4 text-[#5B4FE8]" />}
+              <span className="text-xs font-medium text-[#1A1A1E]">
                 {item.trait}
               </span>
             </div>
-            <span className="text-xs font-bold text-indigo-300">
+            <span className="text-xs font-bold text-[#5B4FE8] font-mono tabular-nums">
               {item.score}%
             </span>
           </div>
         ))}
       </div>
 
-      {/* AI Behavioral Summary Quote */}
+      {/* Summary Narrative */}
       {summary && (
-        <div className="mt-4 p-3.5 bg-indigo-950/30 border border-indigo-500/20 rounded-xl flex items-start gap-3">
-          <Sparkles className="w-4 h-4 text-indigo-400 mt-0.5 shrink-0" />
-          <p className="text-xs text-indigo-200/90 leading-relaxed italic">
-            "{summary}"
-          </p>
+        <div className="mt-4 p-3.5 bg-[#F4F3FF] border border-[#5B4FE8]/15 rounded-xl text-xs text-[#4B4B55] leading-relaxed">
+          <span className="font-semibold text-[#5B4FE8] mr-1">Synthesis:</span>
+          {summary}
         </div>
       )}
     </div>

@@ -107,25 +107,25 @@ export const EmployeeDossierPage: React.FC = () => {
       {/* Back button */}
       <button
         onClick={() => navigate('/hr/employees')}
-        className="text-xs font-medium text-slate-400 hover:text-white flex items-center gap-1.5 transition-colors"
+        className="text-xs font-medium text-[#6B6B76] hover:text-[#1A1A1E] flex items-center gap-1.5 transition-colors cursor-pointer"
       >
         <ArrowLeft className="w-3.5 h-3.5" />
         <span>Back to Employee Directory</span>
       </button>
 
       {/* Hero Header Card */}
-      <div className="bg-[#111827] border border-slate-800 rounded-2xl p-6 shadow-md flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <div className="bg-[#FFFFFF] border border-[#E5E5EA] rounded-2xl p-6 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div className="flex items-center gap-4">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center text-white font-extrabold text-2xl shadow-lg shadow-indigo-500/20">
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-[#5B4FE8] to-[#712AE2] flex items-center justify-center text-white font-extrabold text-2xl shadow-sm">
             {employee.name[0]}
           </div>
           <div>
             <div className="flex items-center gap-2.5">
-              <h2 className="text-2xl font-bold text-white tracking-tight">{employee.name}</h2>
+              <h2 className="text-2xl font-bold text-[#1A1A1E] tracking-tight font-['Plus_Jakarta_Sans']">{employee.name}</h2>
               <Badge variant="primary">{employee.employee_code}</Badge>
             </div>
-            <div className="flex flex-wrap items-center gap-4 text-xs text-slate-400 mt-1.5">
-              <span className="text-indigo-400 font-semibold">{employee.current_job_title}</span>
+            <div className="flex flex-wrap items-center gap-4 text-xs text-[#6B6B76] mt-1.5">
+              <span className="text-[#5B4FE8] font-semibold">{employee.current_job_title}</span>
               <span>•</span>
               <span className="flex items-center gap-1">
                 <Building2 className="w-3.5 h-3.5" />
@@ -137,7 +137,7 @@ export const EmployeeDossierPage: React.FC = () => {
                 {employee.years_of_experience} years experience
               </span>
             </div>
-            {employee.bio && <p className="text-xs text-slate-300 mt-2 max-w-2xl">{employee.bio}</p>}
+            {employee.bio && <p className="text-xs text-[#4B4B55] mt-2 max-w-2xl leading-relaxed">{employee.bio}</p>}
           </div>
         </div>
 
@@ -145,7 +145,7 @@ export const EmployeeDossierPage: React.FC = () => {
         <div className="flex flex-wrap items-center gap-3 shrink-0">
           {/* Psychometric Assessment Status / Trigger */}
           {psychometrics?.has_assessment ? (
-            <span className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-semibold">
+            <span className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#22C55E]/10 text-[#16a34a] border border-[#22C55E]/20 text-xs font-semibold">
               <Check className="w-3.5 h-3.5" />
               Psychometrics Completed
             </span>
@@ -155,14 +155,14 @@ export const EmployeeDossierPage: React.FC = () => {
               disabled={sendingAssessment || psychometrics?.status === 'PENDING'}
               className={`px-3.5 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-2 border transition-all ${
                 psychometrics?.status === 'PENDING'
-                  ? 'bg-amber-500/10 text-amber-300 border-amber-500/20'
-                  : 'bg-slate-800 hover:bg-slate-700 text-slate-200 border-slate-700 cursor-pointer shadow-sm'
+                  ? 'bg-amber-500/10 text-amber-700 border-amber-500/20'
+                  : 'bg-[#F1F1F4] hover:bg-[#E5E5EA] text-[#1A1A1E] border-[#E5E5EA] cursor-pointer shadow-xs'
               }`}
             >
               {sendingAssessment ? (
                 <Loader2 className="w-3.5 h-3.5 animate-spin" />
               ) : (
-                <Send className="w-3.5 h-3.5 text-indigo-400" />
+                <Send className="w-3.5 h-3.5 text-[#5B4FE8]" />
               )}
               <span>
                 {psychometrics?.status === 'PENDING'
@@ -176,39 +176,39 @@ export const EmployeeDossierPage: React.FC = () => {
           <button
             onClick={handleTriggerDivergence}
             disabled={analyzing}
-            className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-semibold text-xs transition-all shadow-md shadow-purple-500/20 flex items-center gap-2 cursor-pointer"
+            className="px-4 py-2.5 rounded-xl bg-[#5B4FE8] hover:bg-[#4A3FD1] text-white font-semibold text-xs transition-all shadow-xs flex items-center gap-2 cursor-pointer"
           >
             {analyzing ? (
               <Loader2 className="w-4 h-4 animate-spin" />
             ) : (
-              <Sparkles className="w-4 h-4 text-amber-300" />
+              <Sparkles className="w-4 h-4 text-white" />
             )}
-            <span>{analyzing ? 'Scanning Projects...' : 'Run Divergence Engine ✨'}</span>
+            <span>{analyzing ? 'Scanning Telemetry...' : 'Run Synthesis Engine ✨'}</span>
           </button>
         </div>
       </div>
 
       {/* Share Link Banner when dispatched */}
       {shareUrl && (
-        <div className="p-4 bg-indigo-950/40 border border-indigo-500/30 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-lg">
+        <div className="p-4 bg-[#F4F3FF] border border-[#5B4FE8]/25 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-lg bg-indigo-500/20 text-indigo-300">
+            <div className="p-2 rounded-lg bg-[#5B4FE8]/15 text-[#5B4FE8]">
               <Send className="w-4 h-4" />
             </div>
             <div>
-              <p className="text-xs font-semibold text-white">Shareable Assessment Link Generated</p>
-              <p className="text-[11px] text-slate-400">
-                Send this test link to <span className="text-slate-200">{employee.name}</span> to complete their 6-question evaluation.
+              <p className="text-xs font-semibold text-[#1A1A1E]">Shareable Assessment Link Generated</p>
+              <p className="text-[11px] text-[#6B6B76]">
+                Send this test link to <span className="text-[#1A1A1E] font-medium">{employee.name}</span> to complete their 6-question evaluation.
               </p>
             </div>
           </div>
           <div className="flex items-center gap-2 w-full sm:w-auto">
-            <span className="text-xs font-mono bg-slate-900 px-3 py-1.5 rounded-lg text-slate-300 border border-slate-800 truncate max-w-xs">
+            <span className="text-xs font-mono bg-[#FFFFFF] px-3 py-1.5 rounded-lg text-[#1A1A1E] border border-[#E5E5EA] truncate max-w-xs">
               {window.location.origin}{shareUrl}
             </span>
             <button
               onClick={handleCopyLink}
-              className="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs flex items-center gap-1.5 transition-colors shrink-0 cursor-pointer"
+              className="px-3 py-1.5 rounded-lg bg-[#5B4FE8] hover:bg-[#4A3FD1] text-white font-semibold text-xs flex items-center gap-1.5 transition-colors shrink-0 cursor-pointer shadow-xs"
             >
               {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
               <span>{copied ? 'Copied!' : 'Copy'}</span>
@@ -243,16 +243,16 @@ export const EmployeeDossierPage: React.FC = () => {
         <div className="flex items-center justify-between mb-4">
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="text-lg font-bold text-white tracking-tight">AI-Discovered Hidden Skills</h3>
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30">
-                ✨ Divergence Engine
+              <h3 className="text-lg font-bold text-[#1A1A1E] tracking-tight font-['Plus_Jakarta_Sans']">AI-Discovered Hidden Skills</h3>
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#5B4FE8]/10 text-[#5B4FE8] border border-[#5B4FE8]/25 font-mono">
+                ✨ Synthesis Engine v4.2
               </span>
             </div>
-            <p className="text-xs text-slate-400 mt-0.5">
+            <p className="text-xs text-[#6B6B76] mt-0.5">
               Capabilities identified from project deliverables that fall beyond their formal job title.
             </p>
           </div>
-          <span className="text-xs text-purple-400 font-semibold">{hiddenSkills.length} Capabilities Discovered</span>
+          <span className="text-xs text-[#5B4FE8] font-semibold font-mono">{hiddenSkills.length} Capabilities Discovered</span>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -272,9 +272,9 @@ export const EmployeeDossierPage: React.FC = () => {
 
       {/* Explicit Core Technical Skills */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="bg-[#111827] border border-slate-800 rounded-2xl p-6 shadow-md">
-          <h3 className="text-base font-bold text-white mb-1">Baseline Role Competencies</h3>
-          <p className="text-xs text-slate-400 mb-5">
+        <div className="bg-[#FFFFFF] border border-[#E5E5EA] rounded-2xl p-6 shadow-xs">
+          <h3 className="text-base font-bold text-[#1A1A1E] mb-1 font-['Plus_Jakarta_Sans']">Baseline Role Competencies</h3>
+          <p className="text-xs text-[#6B6B76] mb-5">
             Explicit skills directly associated with the {employee.current_job_title} title.
           </p>
 
@@ -291,24 +291,24 @@ export const EmployeeDossierPage: React.FC = () => {
         </div>
 
         {/* Verified Project Work Activities */}
-        <div className="bg-[#111827] border border-slate-800 rounded-2xl p-6 shadow-md">
+        <div className="bg-[#FFFFFF] border border-[#E5E5EA] rounded-2xl p-6 shadow-xs">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-base font-bold text-white">Analyzed Project History</h3>
-            <span className="text-xs text-slate-400">{employee.projects?.length || 0} Projects</span>
+            <h3 className="text-base font-bold text-[#1A1A1E] font-['Plus_Jakarta_Sans']">Analyzed Telemetry & Project History</h3>
+            <span className="text-xs text-[#6B6B76] font-mono">{employee.projects?.length || 0} Sources</span>
           </div>
 
           <div className="space-y-4 max-h-96 overflow-y-auto pr-1">
             {employee.projects?.map((p) => (
-              <div key={p.id} className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 text-xs">
+              <div key={p.id} className="p-4 rounded-xl bg-[#F1F1F4] border border-[#E5E5EA] text-xs">
                 <div className="flex items-start justify-between gap-2">
-                  <h4 className="font-bold text-white leading-snug">{p.title}</h4>
-                  <span className="text-[10px] text-slate-400 whitespace-nowrap">2023–2024</span>
+                  <h4 className="font-bold text-[#1A1A1E] leading-snug">{p.title}</h4>
+                  <span className="text-[10px] text-[#9B9BA5] font-mono whitespace-nowrap">2023–2024</span>
                 </div>
-                <p className="text-slate-300 mt-1.5 leading-relaxed">{p.description}</p>
+                <p className="text-[#4B4B55] mt-1.5 leading-relaxed">{p.description}</p>
 
                 {p.achievements && (
-                  <div className="mt-2.5 p-2 bg-indigo-950/20 border border-indigo-500/20 rounded-lg text-indigo-300">
-                    <span className="font-semibold text-white mr-1">Achievement:</span>
+                  <div className="mt-2.5 p-2 bg-[#F4F3FF] border border-[#5B4FE8]/15 rounded-lg text-[#5B4FE8]">
+                    <span className="font-semibold text-[#1A1A1E] mr-1">Achievement:</span>
                     {p.achievements}
                   </div>
                 )}
@@ -316,7 +316,7 @@ export const EmployeeDossierPage: React.FC = () => {
                 {p.technologies && (
                   <div className="mt-2.5 flex flex-wrap gap-1">
                     {p.technologies.split(',').map((t) => (
-                      <span key={t} className="px-1.5 py-0.5 bg-slate-800 text-slate-400 rounded text-[10px]">
+                      <span key={t} className="px-1.5 py-0.5 bg-[#FFFFFF] text-[#4B4B55] border border-[#E5E5EA] rounded text-[10px] font-mono">
                         {t.trim()}
                       </span>
                     ))}

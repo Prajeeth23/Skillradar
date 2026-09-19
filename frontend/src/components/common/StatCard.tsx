@@ -22,19 +22,19 @@ export const StatCard: React.FC<StatCardProps> = ({
   description,
 }) => {
   const iconBgStyles = {
-    indigo: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20',
-    emerald: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
-    amber: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
-    purple: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
-    slate: 'bg-slate-800 text-slate-400 border-slate-700',
+    indigo: 'bg-[#5B4FE8]/10 text-[#5B4FE8] border-[#5B4FE8]/20',
+    emerald: 'bg-[#22C55E]/10 text-[#22C55E] border-[#22C55E]/20',
+    amber: 'bg-amber-500/10 text-amber-600 border-amber-500/20',
+    purple: 'bg-[#712AE2]/10 text-[#712AE2] border-[#712AE2]/20',
+    slate: 'bg-[#F1F1F4] text-[#6B6B76] border-[#E5E5EA]',
   };
 
   return (
-    <div className="bg-[#111827]/80 backdrop-blur-sm border border-slate-800/80 rounded-xl p-5 hover:border-slate-700/80 transition-all duration-200">
+    <div className="bg-[#FFFFFF] border border-[#E5E5EA] rounded-xl p-5 shadow-xs hover:border-[#5B4FE8]/40 hover:shadow-sm transition-all duration-200">
       <div className="flex items-start justify-between">
         <div>
-          <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">{label}</p>
-          <p className="text-2xl font-bold text-white mt-1.5 tabular-nums tracking-tight">{value}</p>
+          <p className="text-[11px] font-semibold text-[#9B9BA5] uppercase tracking-wider">{label}</p>
+          <p className="text-2xl font-bold text-[#1A1A1E] mt-1.5 tabular-nums tracking-tight font-['Plus_Jakarta_Sans']">{value}</p>
         </div>
         <div className={cn('p-2.5 rounded-lg border', iconBgStyles[color])}>
           <Icon className="w-5 h-5" />
@@ -45,16 +45,16 @@ export const StatCard: React.FC<StatCardProps> = ({
           {change && (
             <span
               className={cn(
-                'font-medium px-1.5 py-0.5 rounded',
-                changeType === 'positive' && 'bg-emerald-500/10 text-emerald-400',
-                changeType === 'negative' && 'bg-rose-500/10 text-rose-400',
-                changeType === 'neutral' && 'bg-slate-800 text-slate-400'
+                'font-medium px-1.5 py-0.5 rounded text-[11px]',
+                changeType === 'positive' && 'bg-[#22C55E]/10 text-[#16a34a]',
+                changeType === 'negative' && 'bg-rose-500/10 text-rose-600',
+                changeType === 'neutral' && 'bg-[#F1F1F4] text-[#6B6B76]'
               )}
             >
               {change}
             </span>
           )}
-          {description && <span className="text-slate-400 truncate">{description}</span>}
+          {description && <span className="text-[#6B6B76] truncate">{description}</span>}
         </div>
       )}
     </div>

@@ -15,13 +15,13 @@ export const Badge: React.FC<BadgeProps> = ({
   className,
 }) => {
   const variantStyles = {
-    primary: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20',
-    secondary: 'bg-slate-800 text-slate-300 border-slate-700/50',
-    success: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
-    warning: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
-    danger: 'bg-rose-500/10 text-rose-400 border-rose-500/20',
-    purple: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
-    amber: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
+    primary: 'bg-[#5B4FE8]/10 text-[#5B4FE8] border-[#5B4FE8]/25',
+    secondary: 'bg-[#F1F1F4] text-[#4B4B55] border-[#E5E5EA]',
+    success: 'bg-[#22C55E]/10 text-[#16a34a] border-[#22C55E]/25',
+    warning: 'bg-amber-500/10 text-amber-700 border-amber-500/25',
+    danger: 'bg-rose-500/10 text-rose-600 border-rose-500/25',
+    purple: 'bg-[#712AE2]/10 text-[#712AE2] border-[#712AE2]/25',
+    amber: 'bg-amber-500/10 text-amber-700 border-amber-500/25',
   };
 
   const sizeStyles = {

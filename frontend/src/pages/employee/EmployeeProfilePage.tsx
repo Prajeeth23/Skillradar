@@ -48,18 +48,18 @@ export const EmployeeProfilePage: React.FC = () => {
   return (
     <div className="space-y-8">
       {/* Profile Header */}
-      <div className="bg-[#111827] border border-slate-800 rounded-2xl p-6 shadow-md flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <div className="bg-[#FFFFFF] border border-[#E5E5EA] rounded-2xl p-6 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div className="flex items-center gap-4">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center text-white font-extrabold text-2xl shadow-lg shadow-indigo-500/20">
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-[#5B4FE8] to-[#712AE2] flex items-center justify-center text-white font-extrabold text-2xl shadow-sm">
             {profile.name[0]}
           </div>
           <div>
             <div className="flex items-center gap-2.5">
-              <h2 className="text-2xl font-bold text-white tracking-tight">{profile.name}</h2>
+              <h2 className="text-2xl font-bold text-[#1A1A1E] tracking-tight font-['Plus_Jakarta_Sans']">{profile.name}</h2>
               <Badge variant="primary">{profile.employee_code}</Badge>
             </div>
-            <div className="flex flex-wrap items-center gap-4 text-xs text-slate-400 mt-1.5">
-              <span className="text-indigo-400 font-semibold">{profile.current_job_title}</span>
+            <div className="flex flex-wrap items-center gap-4 text-xs text-[#6B6B76] mt-1.5">
+              <span className="text-[#5B4FE8] font-semibold">{profile.current_job_title}</span>
               <span>•</span>
               <span className="flex items-center gap-1">
                 <Building2 className="w-3.5 h-3.5" />
@@ -71,19 +71,19 @@ export const EmployeeProfilePage: React.FC = () => {
                 {profile.years_of_experience} years experience
               </span>
             </div>
-            {profile.bio && <p className="text-xs text-slate-300 mt-2 max-w-2xl">{profile.bio}</p>}
+            {profile.bio && <p className="text-xs text-[#4B4B55] mt-2 max-w-2xl leading-relaxed">{profile.bio}</p>}
           </div>
         </div>
 
         <div className="flex items-center gap-3">
           <div className="text-right">
-            <div className="text-xs text-slate-400">Total Skills</div>
-            <div className="text-xl font-bold text-white tabular-nums">{profile.total_skills_count}</div>
+            <div className="text-xs text-[#9B9BA5] font-mono">Total Skills</div>
+            <div className="text-xl font-bold text-[#1A1A1E] tabular-nums font-['Plus_Jakarta_Sans']">{profile.total_skills_count}</div>
           </div>
-          <div className="w-px h-8 bg-slate-800" />
+          <div className="w-px h-8 bg-[#E5E5EA]" />
           <div className="text-right">
-            <div className="text-xs text-purple-400 font-semibold">✨ AI Discovered</div>
-            <div className="text-xl font-bold text-purple-300 tabular-nums">{profile.hidden_skills_count}</div>
+            <div className="text-xs text-[#5B4FE8] font-semibold font-mono">✨ AI Discovered</div>
+            <div className="text-xl font-bold text-[#5B4FE8] tabular-nums font-['Plus_Jakarta_Sans']">{profile.hidden_skills_count}</div>
           </div>
         </div>
       </div>
@@ -101,12 +101,12 @@ export const EmployeeProfilePage: React.FC = () => {
         <div className="flex items-center justify-between mb-4">
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="text-lg font-bold text-white tracking-tight">AI-Discovered Hidden Talents</h3>
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30">
-                ✨ Divergence Engine
+              <h3 className="text-lg font-bold text-[#1A1A1E] tracking-tight font-['Plus_Jakarta_Sans']">AI-Discovered Hidden Talents</h3>
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#5B4FE8]/10 text-[#5B4FE8] border border-[#5B4FE8]/25 font-mono">
+                ✨ Synthesis Engine v4.2
               </span>
             </div>
-            <p className="text-xs text-slate-400 mt-0.5">
+            <p className="text-xs text-[#6B6B76] mt-0.5">
               Capabilities extracted from your project achievements that exceed your formal job title.
             </p>
           </div>
@@ -129,9 +129,9 @@ export const EmployeeProfilePage: React.FC = () => {
 
       {/* Core Explicit Skills & Project History */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="bg-[#111827] border border-slate-800 rounded-2xl p-6 shadow-md">
-          <h3 className="text-base font-bold text-white mb-1">Core Explicit Skills</h3>
-          <p className="text-xs text-slate-400 mb-5">Primary responsibilities associated with your position.</p>
+        <div className="bg-[#FFFFFF] border border-[#E5E5EA] rounded-2xl p-6 shadow-xs">
+          <h3 className="text-base font-bold text-[#1A1A1E] mb-1 font-['Plus_Jakarta_Sans']">Core Explicit Skills</h3>
+          <p className="text-xs text-[#6B6B76] mb-5">Primary responsibilities associated with your position.</p>
 
           <div className="space-y-4">
             {explicitSkills.map((s) => (
@@ -144,17 +144,17 @@ export const EmployeeProfilePage: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-[#111827] border border-slate-800 rounded-2xl p-6 shadow-md">
-          <h3 className="text-base font-bold text-white mb-1">Recent Project History</h3>
-          <p className="text-xs text-slate-400 mb-5">Verified deliverables contributing to your skill profile.</p>
+        <div className="bg-[#FFFFFF] border border-[#E5E5EA] rounded-2xl p-6 shadow-xs">
+          <h3 className="text-base font-bold text-[#1A1A1E] mb-1 font-['Plus_Jakarta_Sans']">Recent Project History</h3>
+          <p className="text-xs text-[#6B6B76] mb-5">Verified deliverables contributing to your skill profile.</p>
 
           <div className="space-y-4 max-h-80 overflow-y-auto pr-1">
             {profile.projects?.map((p) => (
-              <div key={p.id} className="p-4 rounded-xl bg-slate-900 border border-slate-800 text-xs">
-                <h4 className="font-bold text-white">{p.title}</h4>
-                <p className="text-slate-300 mt-1">{p.description}</p>
+              <div key={p.id} className="p-4 rounded-xl bg-[#F1F1F4] border border-[#E5E5EA] text-xs">
+                <h4 className="font-bold text-[#1A1A1E]">{p.title}</h4>
+                <p className="text-[#4B4B55] mt-1">{p.description}</p>
                 {p.achievements && (
-                  <p className="mt-2 text-indigo-300 font-medium italic">
+                  <p className="mt-2 text-[#5B4FE8] font-medium italic">
                     Achievement: {p.achievements}
                   </p>
                 )}

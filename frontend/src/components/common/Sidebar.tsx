@@ -70,19 +70,19 @@ export const Sidebar: React.FC = () => {
   const navItems = getNavItems();
 
   return (
-    <aside className="w-64 border-r border-slate-800/80 bg-[#0B0F19] flex flex-col justify-between shrink-0 min-h-[calc(100vh-4rem)]">
+    <aside className="w-64 border-r border-[#E5E5EA] bg-[#FFFFFF] flex flex-col justify-between shrink-0 min-h-[calc(100vh-4rem)]">
       <div className="p-4 space-y-6">
         {/* Role Workspace Banner */}
-        <div className="px-3 py-2.5 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-between">
+        <div className="px-3.5 py-3 rounded-xl bg-[#F1F1F4] border border-[#E5E5EA] flex items-center justify-between">
           <div>
-            <div className="text-[10px] uppercase font-semibold text-slate-400 tracking-wider">Active Workspace</div>
-            <div className="text-xs font-bold text-white mt-0.5">
+            <div className="text-[10px] uppercase font-semibold text-[#9B9BA5] tracking-wider">Active Workspace</div>
+            <div className="text-xs font-bold text-[#1A1A1E] mt-0.5 font-['Plus_Jakarta_Sans']">
               {user?.role === 'PLATFORM_ADMIN' && 'Platform Administration'}
               {user?.role === 'HR' && 'Talent Intelligence'}
               {user?.role === 'EMPLOYEE' && 'Career Development'}
             </div>
           </div>
-          <div className="w-2 h-2 rounded-full bg-indigo-500 shadow-sm shadow-indigo-500" />
+          <div className="w-2 h-2 rounded-full bg-[#5B4FE8]" />
         </div>
 
         {/* Navigation Links */}
@@ -96,23 +96,23 @@ export const Sidebar: React.FC = () => {
                 cn(
                   'flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-all group',
                   isActive
-                    ? 'bg-indigo-600/15 text-indigo-300 border border-indigo-500/30 font-semibold'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/60'
+                    ? 'bg-[#5B4FE8]/10 text-[#5B4FE8] border border-[#5B4FE8]/20 font-semibold shadow-xs'
+                    : 'text-[#6B6B76] hover:text-[#1A1A1E] hover:bg-[#F1F1F4]'
                 )
               }
             >
               <div className="flex items-center gap-3">
-                <item.icon className="w-4 h-4 shrink-0 group-hover:text-indigo-400 transition-colors" />
+                <item.icon className="w-4 h-4 shrink-0 group-hover:text-[#5B4FE8] transition-colors" />
                 <span>{item.label}</span>
               </div>
               {item.isAi && (
-                <span className="flex items-center gap-1 text-[10px] font-bold text-indigo-400 bg-indigo-500/15 px-1.5 py-0.5 rounded border border-indigo-500/20">
+                <span className="flex items-center gap-1 text-[10px] font-bold text-[#5B4FE8] bg-[#5B4FE8]/10 px-1.5 py-0.5 rounded border border-[#5B4FE8]/20">
                   <Sparkles className="w-2.5 h-2.5" />
                   AI
                 </span>
               )}
               {item.badge && !item.isAi && (
-                <span className="text-[10px] font-semibold text-slate-400 bg-slate-800 px-1.5 py-0.5 rounded">
+                <span className="text-[10px] font-semibold text-[#6B6B76] bg-[#F1F1F4] px-1.5 py-0.5 rounded border border-[#E5E5EA]">
                   {item.badge}
                 </span>
               )}
@@ -122,13 +122,13 @@ export const Sidebar: React.FC = () => {
       </div>
 
       {/* Footer Branding & AI Status */}
-      <div className="p-4 m-3 rounded-xl bg-gradient-to-b from-slate-900/60 to-slate-900/90 border border-slate-800 text-xs">
-        <div className="flex items-center gap-2 text-indigo-400 font-semibold mb-1">
+      <div className="p-4 m-3 rounded-xl bg-[#F4F3FF] border border-[#5B4FE8]/20 text-xs">
+        <div className="flex items-center gap-2 text-[#5B4FE8] font-bold mb-1">
           <Sparkles className="w-3.5 h-3.5" />
-          <span>Divergence Engine</span>
+          <span>Synthesis Engine v4.2</span>
         </div>
-        <p className="text-[11px] text-slate-400 leading-relaxed">
-          AI detects capabilities beyond nominal titles using verified project achievements.
+        <p className="text-[11px] text-[#6B6B76] leading-relaxed">
+          AI continuously detects latent capabilities beyond nominal titles from actual telemetry.
         </p>
       </div>
     </aside>

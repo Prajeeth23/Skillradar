@@ -22,18 +22,18 @@ export const SkillProgressBar: React.FC<SkillProgressBarProps> = ({
     <div className="space-y-1.5">
       <div className="flex items-center justify-between text-xs">
         <div className="flex items-center gap-1.5">
-          {isAiDiscovered && <span className="text-amber-400">✨</span>}
-          <span className="font-medium text-slate-200">{skillName}</span>
+          {isAiDiscovered && <span className="text-[#5B4FE8]">✨</span>}
+          <span className="font-medium text-[#1A1A1E]">{skillName}</span>
         </div>
-        <span className="font-semibold text-slate-400 tabular-nums">{pct}%</span>
+        <span className="font-semibold text-[#5B4FE8] font-mono tabular-nums">{pct}%</span>
       </div>
-      <div className="h-2 w-full bg-slate-800 rounded-full overflow-hidden p-0.5">
+      <div className="h-2 w-full bg-[#ECECF0] rounded-full overflow-hidden p-0.5">
         <div
           className={cn(
             'h-full rounded-full transition-all duration-700',
             isAiDiscovered
-              ? 'bg-gradient-to-r from-purple-500 to-indigo-500'
-              : 'bg-gradient-to-r from-indigo-500 to-blue-500'
+              ? 'bg-gradient-to-r from-[#5B4FE8] to-[#712AE2]'
+              : 'bg-gradient-to-r from-[#5B4FE8] to-[#3B82F6]'
           )}
           style={{ width: `${pct}%` }}
         />

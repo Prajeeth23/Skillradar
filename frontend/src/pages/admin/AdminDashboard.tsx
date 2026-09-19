@@ -17,12 +17,12 @@ export const AdminDashboard: React.FC = () => {
   return (
     <div className="space-y-8">
       <div>
-        <div className="flex items-center gap-2 text-xs font-semibold text-purple-400 uppercase tracking-wider mb-1">
-          <Shield className="w-4 h-4 text-purple-400" />
+        <div className="flex items-center gap-2 text-xs font-semibold text-[#5B4FE8] uppercase tracking-wider mb-1 font-mono">
+          <Shield className="w-4 h-4 text-[#5B4FE8]" />
           <span>Platform Administration</span>
         </div>
-        <h2 className="text-2xl font-bold text-white tracking-tight">Platform Overview</h2>
-        <p className="text-xs text-slate-400 mt-1">
+        <h2 className="text-2xl font-bold text-[#1A1A1E] tracking-tight font-['Plus_Jakarta_Sans']">Platform Overview</h2>
+        <p className="text-xs text-[#6B6B76] mt-1">
           Multi-tenant administration, user accounts, and AI divergence pipeline telemetry.
         </p>
       </div>
@@ -64,18 +64,18 @@ export const AdminDashboard: React.FC = () => {
       </div>
 
       {/* User Activity & AI Scans Chart */}
-      <div className="bg-[#111827] border border-slate-800 rounded-2xl p-6 shadow-md">
-        <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-800">
+      <div className="bg-[#FFFFFF] border border-[#E5E5EA] rounded-2xl p-6 shadow-xs">
+        <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#E5E5EA]">
           <div>
-            <h3 className="text-base font-bold text-white">Platform Activity & AI Scans</h3>
-            <p className="text-xs text-slate-400">Weekly user sessions vs Divergence Engine scans</p>
+            <h3 className="text-base font-bold text-[#1A1A1E] font-['Plus_Jakarta_Sans']">Platform Activity & AI Scans</h3>
+            <p className="text-xs text-[#6B6B76]">Weekly user sessions vs Divergence Engine scans</p>
           </div>
-          <div className="flex items-center gap-4 text-xs font-medium">
-            <span className="flex items-center gap-1.5 text-indigo-400">
-              <span className="w-2.5 h-2.5 rounded bg-indigo-500" /> User Logins
+          <div className="flex items-center gap-4 text-xs font-medium font-mono">
+            <span className="flex items-center gap-1.5 text-[#5B4FE8]">
+              <span className="w-2.5 h-2.5 rounded bg-[#5B4FE8]" /> User Logins
             </span>
-            <span className="flex items-center gap-1.5 text-purple-400">
-              <span className="w-2.5 h-2.5 rounded bg-purple-500" /> Divergence Scans
+            <span className="flex items-center gap-1.5 text-[#712AE2]">
+              <span className="w-2.5 h-2.5 rounded bg-[#712AE2]" /> Divergence Scans
             </span>
           </div>
         </div>
@@ -83,18 +83,19 @@ export const AdminDashboard: React.FC = () => {
         <div className="h-64 w-full">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={activityData}>
-              <XAxis dataKey="day" stroke="#64748B" fontSize={12} tickLine={false} />
-              <YAxis stroke="#64748B" fontSize={12} tickLine={false} />
+              <XAxis dataKey="day" stroke="#9B9BA5" fontSize={12} tickLine={false} />
+              <YAxis stroke="#9B9BA5" fontSize={12} tickLine={false} />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: '#0F172A',
-                  borderColor: '#1E293B',
+                  backgroundColor: '#FFFFFF',
+                  borderColor: '#E5E5EA',
                   borderRadius: '0.75rem',
                   fontSize: '12px',
+                  color: '#1A1A1E',
                 }}
               />
-              <Bar dataKey="logins" fill="#6366F1" radius={[4, 4, 0, 0]} />
-              <Bar dataKey="scans" fill="#A855F7" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="logins" fill="#5B4FE8" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="scans" fill="#712AE2" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>

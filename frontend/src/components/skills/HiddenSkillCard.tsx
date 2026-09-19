@@ -16,28 +16,27 @@ export const HiddenSkillCard: React.FC<HiddenSkillCardProps> = ({
   category,
   confidence,
   evidence,
-  source = 'AI Inferred (Divergence Engine)',
+  source = 'AI Inferred (Synthesis Engine v4.2)',
   proficiency = 4,
 }) => {
-  const confidencePercent = Math.round(confidence * 100);
+  const confidencePercent = Math.round(confidence > 1 ? confidence : confidence * 100);
 
   return (
-    <div className="relative group bg-gradient-to-b from-purple-950/20 via-slate-900/60 to-slate-900/90 border border-purple-500/30 hover:border-purple-500/50 rounded-xl p-5 transition-all duration-200 shadow-sm hover:shadow-md hover:shadow-purple-500/10">
+    <div className="relative group bg-[#FFFFFF] border border-[#E5E5EA] hover:border-[#5B4FE8]/40 rounded-xl p-5 transition-all duration-200 shadow-xs hover:shadow-sm">
       {/* Top Tag & Confidence */}
       <div className="flex items-center justify-between mb-3">
-        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-purple-500/15 border border-purple-500/30 text-[11px] font-bold text-purple-300">
-          <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+        <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-[#5B4FE8]/10 text-[10px] font-bold text-[#5B4FE8] font-mono tracking-wider">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#5B4FE8]" />
           <span>AI DISCOVERED</span>
         </div>
-        <div className="flex items-center gap-1.5 text-xs text-slate-300 font-medium bg-slate-800/80 px-2.5 py-0.5 rounded-full border border-slate-700/60">
-          <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-          <span>{confidencePercent}% confidence</span>
+        <div className="flex items-center gap-1 text-xs font-bold text-[#5B4FE8] font-mono">
+          <span className="text-sm">{confidencePercent}%</span>
         </div>
       </div>
 
       {/* Skill Name & Category */}
-      <div className="flex items-baseline justify-between mb-2">
-        <h4 className="text-base font-bold text-white tracking-tight">{skillName}</h4>
+      <div className="flex items-baseline justify-between mb-2 gap-2">
+        <h4 className="text-base font-bold text-[#1A1A1E] tracking-tight font-['Plus_Jakarta_Sans']">{skillName}</h4>
         <Badge variant="purple" size="sm">
           {category}
         </Badge>
@@ -45,21 +44,21 @@ export const HiddenSkillCard: React.FC<HiddenSkillCardProps> = ({
 
       {/* Evidence Quote Block */}
       {evidence && (
-        <div className="mt-3.5 pt-3 border-t border-slate-800/80">
-          <div className="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-300 uppercase tracking-wider mb-1.5">
-            <Quote className="w-3 h-3 text-indigo-400" />
-            <span>Verified Work Evidence</span>
+        <div className="mt-3.5 pt-3 border-t border-[#E5E5EA]">
+          <div className="flex items-center gap-1.5 text-[11px] font-semibold text-[#5B4FE8] uppercase tracking-wider mb-1.5 font-mono">
+            <Quote className="w-3 h-3 text-[#5B4FE8]" />
+            <span>Telemetry Evidence</span>
           </div>
-          <p className="text-xs text-slate-300 italic bg-slate-950/60 p-3 rounded-lg border border-slate-800/60 leading-relaxed">
+          <p className="text-xs text-[#4B4B55] italic bg-[#F4F3FF] p-3 rounded-lg border border-[#5B4FE8]/15 leading-relaxed">
             "{evidence}"
           </p>
         </div>
       )}
 
       {/* Footer Info */}
-      <div className="mt-3.5 flex items-center justify-between text-[11px] text-slate-400">
-        <span>Source: {source}</span>
-        <span>Demonstrated: Level {proficiency}/5</span>
+      <div className="mt-3.5 flex items-center justify-between text-[11px] text-[#9B9BA5] font-mono">
+        <span className="truncate max-w-[200px]">{source}</span>
+        <span>L{proficiency} / 5</span>
       </div>
     </div>
   );
