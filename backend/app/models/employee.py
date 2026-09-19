@@ -30,3 +30,4 @@ class Employee(Base):
     role_matches = relationship("RoleMatch", back_populates="employee", cascade="all, delete-orphan")
     skill_gaps = relationship("SkillGap", back_populates="employee", cascade="all, delete-orphan")
     learning_recommendations = relationship("LearningRecommendation", back_populates="employee", cascade="all, delete-orphan")
+    psychometric_assessments = relationship("PsychometricAssessment", back_populates="employee", cascade="all, delete-orphan")

@@ -11,6 +11,12 @@ from app.models.role_match import RoleMatch
 from app.models.skill_gap import SkillGap
 from app.models.learning_recommendation import LearningRecommendation
 from app.models.notification import Notification
+from app.models.psychometric_assessment import (
+    PsychometricAssessment,
+    PsychometricTraitScore,
+    AssessmentStatus,
+    TraitType,
+)
 
 __all__ = [
     "Organization",
@@ -26,4 +32,8 @@ __all__ = [
     "SkillGap",
     "LearningRecommendation",
     "Notification",
+    "PsychometricAssessment",
+    "PsychometricTraitScore",
+    "AssessmentStatus",
+    "TraitType",
 ]

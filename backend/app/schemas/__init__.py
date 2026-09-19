@@ -34,6 +34,16 @@ from app.schemas.skill_gap import (
 )
 from app.schemas.career import CareerChatRequest, CareerChatResponse, LearningRecommendationRead
 from app.schemas.notification import NotificationRead, NotificationStatusUpdate, NotificationSummary
+from app.schemas.psychometric import (
+    PsychometricAssessmentOut,
+    TraitScoreOut,
+    AssessmentQuestionOption,
+    AssessmentQuestionOut,
+    AssessmentQuestionsResponse,
+    AssessmentSubmission,
+    AssessmentShareLinkResponse,
+    EmployeePsychometricsResponse,
+)
 
 __all__ = [
     "StandardResponse",
@@ -81,4 +91,12 @@ __all__ = [
     "NotificationRead",
     "NotificationStatusUpdate",
     "NotificationSummary",
+    "PsychometricAssessmentOut",
+    "TraitScoreOut",
+    "AssessmentQuestionOption",
+    "AssessmentQuestionOut",
+    "AssessmentQuestionsResponse",
+    "AssessmentSubmission",
+    "AssessmentShareLinkResponse",
+    "EmployeePsychometricsResponse",
 ]

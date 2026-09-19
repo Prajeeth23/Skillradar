@@ -14,10 +14,14 @@ import { Employee } from '../../types/employee';
 import { DivergenceResult } from '../../types/skill';
 import { getEmployeeDetailApi } from '../../api/employees';
 import { runDivergenceEngineApi } from '../../api/skills';
+import { getEmployeePsychometricsApi, sendAssessmentLinkApi } from '../../api/psychometrics';
 import { DivergenceVisualizer } from '../../components/skills/DivergenceVisualizer';
 import { HiddenSkillCard } from '../../components/skills/HiddenSkillCard';
 import { SkillProgressBar } from '../../components/skills/SkillProgressBar';
+import { TraitRadarChart } from '../../components/skills/TraitRadarChart';
 import { Badge } from '../../components/common/Badge';
+import { EmployeePsychometrics } from '../../types/psychometric';
+import { Send, Copy, Check, ShieldAlert } from 'lucide-react';
 
 export const EmployeeDossierPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -25,8 +29,12 @@ export const EmployeeDossierPage: React.FC = () => {
 
   const [employee, setEmployee] = useState<Employee | null>(null);
   const [divergenceData, setDivergenceData] = useState<DivergenceResult | null>(null);
+  const [psychometrics, setPsychometrics] = useState<EmployeePsychometrics | null>(null);
   const [loading, setLoading] = useState(true);
   const [analyzing, setAnalyzing] = useState(false);
+  const [sendingAssessment, setSendingAssessment] = useState(false);
+  const [shareUrl, setShareUrl] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     const fetchDossier = async () => {
@@ -39,6 +47,10 @@ export const EmployeeDossierPage: React.FC = () => {
         // Pre-populate initial divergence view
         const div = await runDivergenceEngineApi(id);
         setDivergenceData(div);
+
+        // Fetch psychometric assessment status
+        const psych = await getEmployeePsychometricsApi(id);
+        setPsychometrics(psych);
       } finally {
         setLoading(false);
       }
@@ -55,6 +67,28 @@ export const EmployeeDossierPage: React.FC = () => {
     } finally {
       setAnalyzing(false);
     }
+  };
+
+  const handleSendAssessment = async () => {
+    if (!id) return;
+    setSendingAssessment(true);
+    try {
+      const linkData = await sendAssessmentLinkApi(id);
+      setShareUrl(linkData.share_url);
+      setPsychometrics((prev) =>
+        prev ? { ...prev, status: 'PENDING' } : null
+      );
+    } finally {
+      setSendingAssessment(false);
+    }
+  };
+
+  const handleCopyLink = () => {
+    if (!shareUrl) return;
+    const fullUrl = `${window.location.origin}${shareUrl}`;
+    navigator.clipboard.writeText(fullUrl);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2500);
   };
 
   if (loading || !employee) {
@@ -107,20 +141,89 @@ export const EmployeeDossierPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Trigger Divergence Engine CTA */}
-        <button
-          onClick={handleTriggerDivergence}
-          disabled={analyzing}
-          className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-semibold text-xs transition-all shadow-md shadow-purple-500/20 flex items-center gap-2 shrink-0"
-        >
-          {analyzing ? (
-            <Loader2 className="w-4 h-4 animate-spin" />
+        {/* Action CTAs */}
+        <div className="flex flex-wrap items-center gap-3 shrink-0">
+          {/* Psychometric Assessment Status / Trigger */}
+          {psychometrics?.has_assessment ? (
+            <span className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-semibold">
+              <Check className="w-3.5 h-3.5" />
+              Psychometrics Completed
+            </span>
           ) : (
-            <Sparkles className="w-4 h-4 text-amber-300" />
+            <button
+              onClick={handleSendAssessment}
+              disabled={sendingAssessment || psychometrics?.status === 'PENDING'}
+              className={`px-3.5 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-2 border transition-all ${
+                psychometrics?.status === 'PENDING'
+                  ? 'bg-amber-500/10 text-amber-300 border-amber-500/20'
+                  : 'bg-slate-800 hover:bg-slate-700 text-slate-200 border-slate-700 cursor-pointer shadow-sm'
+              }`}
+            >
+              {sendingAssessment ? (
+                <Loader2 className="w-3.5 h-3.5 animate-spin" />
+              ) : (
+                <Send className="w-3.5 h-3.5 text-indigo-400" />
+              )}
+              <span>
+                {psychometrics?.status === 'PENDING'
+                  ? 'Assessment Pending'
+                  : 'Send Assessment Link'}
+              </span>
+            </button>
           )}
-          <span>{analyzing ? 'Scanning Projects...' : 'Run Divergence Engine ✨'}</span>
-        </button>
+
+          {/* Trigger Divergence Engine CTA */}
+          <button
+            onClick={handleTriggerDivergence}
+            disabled={analyzing}
+            className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-semibold text-xs transition-all shadow-md shadow-purple-500/20 flex items-center gap-2 cursor-pointer"
+          >
+            {analyzing ? (
+              <Loader2 className="w-4 h-4 animate-spin" />
+            ) : (
+              <Sparkles className="w-4 h-4 text-amber-300" />
+            )}
+            <span>{analyzing ? 'Scanning Projects...' : 'Run Divergence Engine ✨'}</span>
+          </button>
+        </div>
       </div>
+
+      {/* Share Link Banner when dispatched */}
+      {shareUrl && (
+        <div className="p-4 bg-indigo-950/40 border border-indigo-500/30 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-lg">
+          <div className="flex items-center gap-2.5">
+            <div className="p-2 rounded-lg bg-indigo-500/20 text-indigo-300">
+              <Send className="w-4 h-4" />
+            </div>
+            <div>
+              <p className="text-xs font-semibold text-white">Shareable Assessment Link Generated</p>
+              <p className="text-[11px] text-slate-400">
+                Send this test link to <span className="text-slate-200">{employee.name}</span> to complete their 6-question evaluation.
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 w-full sm:w-auto">
+            <span className="text-xs font-mono bg-slate-900 px-3 py-1.5 rounded-lg text-slate-300 border border-slate-800 truncate max-w-xs">
+              {window.location.origin}{shareUrl}
+            </span>
+            <button
+              onClick={handleCopyLink}
+              className="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs flex items-center gap-1.5 transition-colors shrink-0 cursor-pointer"
+            >
+              {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+              <span>{copied ? 'Copied!' : 'Copy'}</span>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Trait Radar Chart Display (if assessment completed) */}
+      {psychometrics?.has_assessment && (
+        <TraitRadarChart
+          data={psychometrics.radar_data}
+          summary={psychometrics.assessment?.trait_summary}
+        />
+      )}
 
       {/* Signature Divergence Flow Visualization */}
       {divergenceData && (

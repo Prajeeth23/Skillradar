@@ -10,6 +10,7 @@ from app.api.routes import (
     skill_gap,
     career,
     notifications,
+    psychometrics,
 )
 
 api_router = APIRouter()
@@ -24,3 +25,4 @@ api_router.include_router(matching.router)
 api_router.include_router(skill_gap.router)
 api_router.include_router(career.router)
 api_router.include_router(notifications.router)
+api_router.include_router(psychometrics.router)

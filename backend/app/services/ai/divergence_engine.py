@@ -348,6 +348,7 @@ class DivergenceEngine:
                 last_updated=datetime.now(timezone.utc),
             )
             db.add(emp_skill)
+            db.flush()
             if is_hidden:
                 is_new_hidden = True
         else:

@@ -26,6 +26,7 @@ import { EmployeeProfilePage } from './pages/employee/EmployeeProfilePage';
 import { SkillGapAnalysisPage } from './pages/employee/SkillGapAnalysisPage';
 import { InternalOpportunitiesPage } from './pages/employee/InternalOpportunitiesPage';
 import { CareerAssistantPage } from './pages/employee/CareerAssistantPage';
+import { AssessmentPage } from './pages/employee/AssessmentPage';
 
 const RootRedirect: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
@@ -43,8 +44,9 @@ export const App: React.FC = () => {
       <AuthProvider>
         <NotificationProvider>
           <Routes>
-            {/* Public Login Route */}
+            {/* Public Routes */}
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/assessment/:token" element={<AssessmentPage />} />
 
             {/* Root Dispatcher */}
             <Route path="/" element={<RootRedirect />} />

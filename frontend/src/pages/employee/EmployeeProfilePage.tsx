@@ -3,13 +3,17 @@ import { Sparkles, Building2, Calendar, FolderGit2, CheckCircle2 } from 'lucide-
 import { useAuth } from '../../context/AuthContext';
 import { Employee } from '../../types/employee';
 import { getMyProfileApi } from '../../api/employees';
+import { getEmployeePsychometricsApi } from '../../api/psychometrics';
 import { HiddenSkillCard } from '../../components/skills/HiddenSkillCard';
 import { SkillProgressBar } from '../../components/skills/SkillProgressBar';
+import { TraitRadarChart } from '../../components/skills/TraitRadarChart';
 import { Badge } from '../../components/common/Badge';
+import { EmployeePsychometrics } from '../../types/psychometric';
 
 export const EmployeeProfilePage: React.FC = () => {
   const { user } = useAuth();
   const [profile, setProfile] = useState<Employee | null>(null);
+  const [psychometrics, setPsychometrics] = useState<EmployeePsychometrics | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -18,6 +22,11 @@ export const EmployeeProfilePage: React.FC = () => {
       try {
         const data = await getMyProfileApi();
         setProfile(data);
+
+        if (data?.id) {
+          const psych = await getEmployeePsychometricsApi(data.id);
+          setPsychometrics(psych);
+        }
       } finally {
         setLoading(false);
       }
@@ -78,6 +87,14 @@ export const EmployeeProfilePage: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Behavioral Psychometric Profile (if completed) */}
+      {psychometrics?.has_assessment && (
+        <TraitRadarChart
+          data={psychometrics.radar_data}
+          summary={psychometrics.assessment?.trait_summary}
+        />
+      )}
 
       {/* AI-Discovered Skills (Prominent Section) */}
       <div>

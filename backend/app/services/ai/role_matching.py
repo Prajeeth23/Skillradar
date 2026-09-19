@@ -118,8 +118,15 @@ class RoleMatchingEngine:
         hidden_bonus = min(20.0, len(transferable_skill_names) * 5.0)
         computed_score = round(min(98.0, base_score + hidden_bonus), 1)
 
-        # Try Groq AI for deep explainability
-        ai_explanation: Optional[str] = None
+        # Check for optional completed psychometric trait summary
+        trait_summary: Optional[str] = None
+        for pa in getattr(employee, "psychometric_assessments", []):
+            if getattr(pa, "status", None) and pa.status.value == "COMPLETED" and pa.trait_summary:
+                trait_summary = pa.trait_summary
+                break
+
+        # Generate Explainable Match Reasoning via Groq or Deterministic Fallback
+        ai_explanation = None
         if groq_service.is_available():
             ai_explanation = RoleMatchingEngine._generate_ai_explanation(
                 employee=employee,
@@ -128,10 +135,10 @@ class RoleMatchingEngine:
                 matching_skills=matching_skill_names,
                 missing_skills=missing_skill_names,
                 transferable_skills=transferable_skill_names,
+                trait_summary=trait_summary,
             )
 
         if not ai_explanation:
-            # Deterministic Explainability Builder
             ai_explanation = RoleMatchingEngine._generate_heuristic_explanation(
                 employee_name=employee.user.name,
                 job_title=employee.current_job_title,
@@ -140,6 +147,7 @@ class RoleMatchingEngine:
                 matching=matching_skill_names,
                 missing=missing_skill_names,
                 transferable=transferable_skill_names,
+                trait_summary=trait_summary,
             )
 
         # Persist or update RoleMatch record
@@ -202,6 +210,7 @@ class RoleMatchingEngine:
         matching_skills: List[str],
         missing_skills: List[str],
         transferable_skills: List[str],
+        trait_summary: Optional[str] = None,
     ) -> Optional[str]:
         system_prompt = (
             "You are the Talent Matching Explainer for SkillRadar. "
@@ -210,13 +219,16 @@ class RoleMatchingEngine:
             "even if their nominal title differs from the target role. Write 2-3 concise, compelling sentences."
         )
 
+        trait_line = f"Psychometric Traits: {trait_summary}\n" if trait_summary else ""
+
         user_prompt = (
             f"Candidate: {employee.user.name} (Current Title: {employee.current_job_title})\n"
             f"Target Role: {role.title} ({role.department})\n"
             f"Calculated Match Score: {match_score}%\n"
             f"Matching Skills: {', '.join(matching_skills) if matching_skills else 'None'}\n"
             f"Missing Skills: {', '.join(missing_skills) if missing_skills else 'None'}\n"
-            f"Hidden/Transferable Skills: {', '.join(transferable_skills) if transferable_skills else 'None'}\n\n"
+            f"Hidden/Transferable Skills: {', '.join(transferable_skills) if transferable_skills else 'None'}\n"
+            f"{trait_line}\n"
             f"Explain why this employee is a compelling candidate."
         )
 
@@ -235,6 +247,7 @@ class RoleMatchingEngine:
         matching: List[str],
         missing: List[str],
         transferable: List[str],
+        trait_summary: Optional[str] = None,
     ) -> str:
         matching_text = f"core competencies in {', '.join(matching[:3])}" if matching else "adjacent project experience"
         hidden_text = (
@@ -242,9 +255,14 @@ class RoleMatchingEngine:
             if transferable
             else ""
         )
+        trait_text = (
+            f" Psychometric evaluation highlights: {trait_summary}"
+            if trait_summary
+            else ""
+        )
         return (
             f"{employee_name} matches {match_score:.1f}% for '{role_title}'. "
-            f"Despite formally holding the title '{job_title}', demonstrated {matching_text} directly align with role demands.{hidden_text}"
+            f"Despite formally holding the title '{job_title}', demonstrated {matching_text} directly align with role demands.{hidden_text}{trait_text}"
         )
 
 

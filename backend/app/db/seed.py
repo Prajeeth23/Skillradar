@@ -15,6 +15,12 @@ from app.models.role import InternalRole
 from app.models.role_skill import RoleSkill
 from app.models.role_match import RoleMatch
 from app.models.notification import Notification
+from app.models.psychometric_assessment import (
+    PsychometricAssessment,
+    PsychometricTraitScore,
+    AssessmentStatus,
+    TraitType,
+)
 
 
 def seed_database(db: Session):
@@ -546,6 +552,75 @@ def seed_database(db: Session):
                 )
             )
             db.commit()
+
+    # 8. Seed Completed Psychometric Assessments for Marcus, Elena, and Sophia
+    psychometric_seed_data = [
+        {
+            "code": "EMP-1001",  # Marcus Vance
+            "token": "token-marcus-vance-psych-demo",
+            "summary": "Exhibits empathetic stakeholder bridge-building, cross-functional synergy, and decisive leadership guidance. Demonstrates outstanding aptitude for team alignment and complex product initiatives.",
+            "scores": [
+                (TraitType.LEADERSHIP, 75.0),
+                (TraitType.ADAPTABILITY, 66.7),
+                (TraitType.ANALYTICAL_THINKING, 83.3),
+                (TraitType.COLLABORATION, 91.7),
+            ],
+        },
+        {
+            "code": "EMP-1002",  # Elena Rostova
+            "token": "token-elena-rostova-psych-demo",
+            "summary": "Demonstrates exceptional analytical rigor, structured problem-solving, and cognitive agility in fast-changing environments. Highly effective at engineering resilient system automation.",
+            "scores": [
+                (TraitType.LEADERSHIP, 58.3),
+                (TraitType.ADAPTABILITY, 83.3),
+                (TraitType.ANALYTICAL_THINKING, 91.7),
+                (TraitType.COLLABORATION, 75.0),
+            ],
+        },
+        {
+            "code": "EMP-1003",  # Sophia Chen
+            "token": "token-sophia-chen-psych-demo",
+            "summary": "Combines high cognitive adaptability with structured analytical inquiry and decisive communication. Excels at translating ambiguous business opportunities into concrete analytical strategies.",
+            "scores": [
+                (TraitType.LEADERSHIP, 83.3),
+                (TraitType.ADAPTABILITY, 91.7),
+                (TraitType.ANALYTICAL_THINKING, 75.0),
+                (TraitType.COLLABORATION, 83.3),
+            ],
+        },
+    ]
+
+    for pdata in psychometric_seed_data:
+        emp = db.query(Employee).filter(Employee.employee_code == pdata["code"]).first()
+        if emp:
+            existing_ass = (
+                db.query(PsychometricAssessment)
+                .filter(PsychometricAssessment.employee_id == emp.id)
+                .first()
+            )
+            if not existing_ass:
+                ass = PsychometricAssessment(
+                    id=str(uuid.uuid4()),
+                    employee_id=emp.id,
+                    status=AssessmentStatus.COMPLETED,
+                    assessment_token=pdata["token"],
+                    sent_at=datetime.now(timezone.utc),
+                    completed_at=datetime.now(timezone.utc),
+                    trait_summary=pdata["summary"],
+                )
+                db.add(ass)
+                db.flush()
+
+                for trait_enum, score_val in pdata["scores"]:
+                    db.add(
+                        PsychometricTraitScore(
+                            id=str(uuid.uuid4()),
+                            assessment_id=ass.id,
+                            trait=trait_enum,
+                            score=score_val,
+                        )
+                    )
+    db.commit()
 
     print("Seed complete! Demo users and divergent talent loaded successfully.")
     print("Credentials:")

@@ -94,6 +94,48 @@ class NotificationService:
                 )
 
     @staticmethod
+    def notify_employee_assessment_sent(
+        db: Session,
+        employee: Employee,
+        assessment_token: str,
+    ) -> Notification:
+        """Notify employee that HR has sent a psychometric assessment link."""
+        return NotificationService.create_notification(
+            db=db,
+            user_id=employee.user_id,
+            notif_type="ASSESSMENT_INVITATION",
+            title="Psychometric Assessment Invitation",
+            message=(
+                f"HR has invited you to complete a brief 6-question career psychometric assessment. "
+                f"Access your personalized assessment using token: {assessment_token}"
+            ),
+        )
+
+    @staticmethod
+    def notify_hr_assessment_completed(
+        db: Session,
+        employee: Employee,
+    ) -> None:
+        """Notify HR team when an employee submits their psychometric assessment."""
+        hr_users = (
+            db.query(User)
+            .filter(
+                User.organization_id == employee.user.organization_id,
+                User.role.in_([UserRole.HR, UserRole.PLATFORM_ADMIN]),
+                User.is_active == True,
+            )
+            .all()
+        )
+        for hr in hr_users:
+            NotificationService.create_notification(
+                db=db,
+                user_id=hr.id,
+                notif_type="ASSESSMENT_COMPLETED",
+                title=f"Psychometric Results Ready: {employee.user.name}",
+                message=f"{employee.user.name} has completed their psychometric assessment. View their trait profile and radar chart in their dossier.",
+            )
+
+    @staticmethod
     def get_user_notifications(
         db: Session,
         user_id: str,

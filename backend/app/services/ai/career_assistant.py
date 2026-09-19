@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 from sqlalchemy.orm import Session
 
 from app.models.employee import Employee
@@ -29,14 +29,20 @@ class CareerAssistantService:
         roles_summary = [f"- {r.title} ({r.department})" for r in open_roles]
 
         # 2. Try Groq AI Chat Completion
+        # Extract optional psychometric trait summary
+        trait_summary = None
+        for pa in getattr(employee, "psychometric_assessments", []):
+            if getattr(pa, "status", None) and pa.status.value == "COMPLETED" and pa.trait_summary:
+                trait_summary = pa.trait_summary
+                break
+
         ai_reply = None
         if groq_service.is_available():
             system_prompt = (
-                "You are SkillRadar's AI Career Assistant. You are having a 1-on-1 career advisory chat "
-                "with an employee.\n"
-                "Your advice must be strictly grounded in the employee's profile data provided below.\n"
-                "Always emphasize their discovered hidden/transferable skills that elevate them beyond their formal job title.\n"
-                "Never disclose or discuss information about other employees.\n"
+                "You are the SkillRadar AI Career Assistant, a strategic talent advisor. "
+                "Your objective is to provide actionable career intelligence grounded in the employee's "
+                "verified projects, explicit technical competencies, and discovered hidden/transferable skills. "
+                "If psychometric behavioral traits are present, incorporate them to answer questions about soft skills, leadership, and strengths. "
                 "Be encouraging, concise, actionable, and professional."
             )
 
@@ -46,6 +52,7 @@ class CareerAssistantService:
                 f"Department: {employee.department}\n"
                 f"Explicit Skills: {', '.join(explicit_skills) if explicit_skills else 'None'}\n"
                 f"Hidden/Transferable Skills Discovered: {', '.join(hidden_skills) if hidden_skills else 'None'}\n"
+                f"Psychometric Behavioral Traits: {trait_summary if trait_summary else 'Assessment not yet completed'}\n"
                 f"Recent Projects:\n" + "\n".join(projects_summary) + "\n\n"
                 f"Open Roles in Organization:\n" + "\n".join(roles_summary) + "\n\n"
                 f"Employee asks: {message}"
@@ -65,6 +72,7 @@ class CareerAssistantService:
                 explicit_skills=explicit_skills,
                 hidden_skills=hidden_skills,
                 open_roles=[r.title for r in open_roles],
+                trait_summary=trait_summary,
             )
 
         suggested_actions = [
@@ -85,8 +93,21 @@ class CareerAssistantService:
         explicit_skills: List[str],
         hidden_skills: List[str],
         open_roles: List[str],
+        trait_summary: Optional[str] = None,
     ) -> str:
         msg_lower = message.lower()
+
+        if any(k in msg_lower for k in ["strength", "trait", "behavior", "psychometric", "personality", "soft skill"]):
+            if trait_summary:
+                return (
+                    f"Beyond your technical skills, your psychometric assessment highlights: **{trait_summary}** "
+                    f"These core behavioral dimensions emphasize that you are well-equipped for roles requiring cross-functional influence and agile collaboration."
+                )
+            else:
+                return (
+                    f"Your psychometric assessment has not been completed yet. Once HR sends an assessment link and you complete it, "
+                    f"your leadership, adaptability, analytical thinking, and collaboration traits will appear here!"
+                )
 
         if "hidden" in msg_lower or "discover" in msg_lower or "transferable" in msg_lower:
             if hidden_skills:

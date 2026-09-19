@@ -5,6 +5,7 @@ from app.services.ai.divergence_engine import divergence_engine
 from app.services.ai.role_matching import role_matching_engine
 from app.services.ai.skill_gap import skill_gap_service
 from app.services.ai.career_assistant import career_assistant_service
+from app.services.ai.psychometric_engine import psychometric_engine
 
 __all__ = [
     "groq_service",
@@ -13,4 +14,5 @@ __all__ = [
     "role_matching_engine",
     "skill_gap_service",
     "career_assistant_service",
+    "psychometric_engine",
 ]
